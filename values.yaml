@@ -1,0 +1,84 @@
+# Default values for mcp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  #
+  # Credentials
+  #
+  keycloak_db_username: "admin"
+  keycloak_db_password: "changeit"
+  keycloak_admin: "admin"
+  keycloak_admin_password: "changeit"
+  keycloak_keystore_password: "changeit"
+  keycloak_truststore_password: changeit"
+  msr_database_username: "admin"
+  msr_database_password: "changeit"
+  msr_keycloak_client_secret: "changeit"
+  msr_ledger_address: "0x000000000000000000000000000000000000000"
+  msr_ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+  #
+  # Other Configuration
+  #
+  keycloak_url: "http://localhost/mcp"
+  keycloak_auth_url: "http://localhost/mcp/auth"
+  keycloak_admin_url: "http://localhost/mcp/auth"
+  keycloak_realm: "MCP"
+  keycloak_db_type: "postgres"
+  keycloak_db_url: "jdbc:postgresql://localhost/keycloak_mcp"
+  mcp_identity_register_url: "http://localhost/mcp/mir"
+  mcp_identity_register_api_url: "http://localhost/mcp/mir/oidc/api"
+  msr_database_type: "postgresql"
+  msr_database_host: "localhost"
+  msr_database_port: 5432
+  msr_keycloak_client_id: "mcpsvreg"
+  msr_ledger_host: "mc-msr-ledger.mcp"
+  msr_ledger_port: 8546
+  mcp_portal_title: "MCP Testbed - Test Environment"
+  mcp_portal_name: "MCP Testbed"
+  mcp_portal_identity_provider_mrn_namespace: "mcp"
+  mcp_portal_identify_registry_url: "https://localhost/mcp/mir"
+  mcp_portal_identify_registry_provider: "Maritime Connectivity Platform"
+  mcp_portal_identify_registry_email: "test@email.org"
+  mcp_portal_service_registry_url: "https://mcp.grad-rrnav.pub/mcp/msr"
+  mcp_portal_service_registry_provider: "Maritime Connectivity Platform"
+  mcp_portal_service_registry_email: "test@email.org"
+  mcp_portal_management_portal_provider: "Maritime Connectivity Platform"
+  mcp_portal_management_portal_email: "test@email.org"
+
+# The ingress is defined in the top level
+ingress:
+  enabled: true
+  name: mcp-ingress
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  hosts:
+    - host: localhost
+      paths:
+        - path: /mcp/(auth)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-keycloak
+          servicePort: 8090
+        - path: /(mcp/mir)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-identity-registry
+          servicePort: 8443
+        - path: /(mcp/msr)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-service-registry
+          servicePort: 8444
+        - path: /mcp/ledger()(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-msr-ledger
+          servicePort: 8545
+        - path: /mcp/portal()(.*)
+          pathType: ImplementationSpecific
+          serviceName: mcp-management-portal
+          servicePort: 4200
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local

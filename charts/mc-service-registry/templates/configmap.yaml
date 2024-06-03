@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mc-service-registry-config
+data:
+  keycloak_url: {{ .Values.global.keycloak_url | quote }}
+  keycloak_realm: {{ .Values.global.keycloak_realm  | quote}}
+  mcp_identity_register_api_url: {{ .Values.global.mcp_identity_register_api_url | quote }}
+  msr_database_type: {{ .Values.global.msr_database_type | quote }}
+  msr_database_host: {{ .Values.global.msr_database_host | quote }}
+  msr_database_port: {{ .Values.global.msr_database_port | quote }}
+  msr_keycloak_client_id: {{ .Values.global.msr_keycloak_client_id | quote }}
+  msr_ledger_host: {{ .Values.global.msr_ledger_host | quote }}
+  msr_ledger_port: {{ .Values.global.msr_ledger_port | quote }}

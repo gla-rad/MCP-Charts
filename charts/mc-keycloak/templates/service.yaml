@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mc-keycloak.fullname" . }}
+  labels:
+    {{- include "mc-keycloak.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "mc-keycloak.selectorLabels" . | nindent 4 }}
+  externalIPs: {{ .Values.service.externalIPs }}
+
+  
