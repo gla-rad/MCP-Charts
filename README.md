@@ -14,7 +14,7 @@ as a Helm Chart repository using the Github pages. The main guides to do
 this were the official
 [Helm documentation](https://helm.sh/docs/howto/chart_releaser_action/)
 as well an other online resources such as
-[this](https://dev.to/jamiemagee/how-to-host-your-helm-chart-repository-on-github-3kd)
+[this](https://dev.to/jamiemagee/how-to-host-your-helm-chart-repository-on-github-3kd).
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to
