@@ -1,0 +1,58 @@
+apiVersion: v1
+entries:
+  mc-identity-registry:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-06-04T09:45:12.002341582Z"
+    description: A Helm chart for the MCP MIR service
+    digest: fc3a0a8e3314cb0d535b665e90a703014715a6ebe4b0708c9fe1bd6efe5fe5b7
+    name: mc-identity-registry
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mc-identity-registry-0.0.1/mc-identity-registry-0.0.1.tgz
+    version: 0.0.1
+  mc-keycloak:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-06-04T09:45:12.180617091Z"
+    description: A Helm chart for the MCP keycloak service
+    digest: 5e754c603a1cfe30b7abd88e3d7f2a2b98797865412453f9bcd84d60084b3295
+    name: mc-keycloak
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mc-keycloak-0.0.1/mc-keycloak-0.0.1.tgz
+    version: 0.0.1
+  mc-msr-ledger:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-06-04T09:45:12.33450868Z"
+    description: A Helm chart for the MCP MSR ledger service
+    digest: 1bbfd89c5cb6c8fc8783c0949c7c956ac10dcbf24a1d813d025003f8bf438b70
+    name: mc-msr-ledger
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mc-msr-ledger-0.0.1/mc-msr-ledger-0.0.1.tgz
+    version: 0.0.1
+  mc-service-registry:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-06-04T09:45:12.506396551Z"
+    description: A Helm chart for the MCP MSR service
+    digest: efe9589bfd17c907b14f6ea693e93ddb2b8e49b89523e6cd2ec6d9db01e73fe8
+    name: mc-service-registry
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mc-service-registry-0.0.1/mc-service-registry-0.0.1.tgz
+    version: 0.0.1
+  mcp-management-portal:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-06-04T09:45:12.659702097Z"
+    description: A Helm chart for the MCP Management Portal
+    digest: 5166f4dc0d05646bceda05db32b4b28bb8004b4fa291b7dbd6e95fe5f9f4c9ae
+    name: mcp-management-portal
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mcp-management-portal-0.0.1/mcp-management-portal-0.0.1.tgz
+    version: 0.0.1
+generated: "2024-06-04T09:45:12.659715412Z"
