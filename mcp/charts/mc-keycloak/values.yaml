@@ -4,6 +4,23 @@
 
 replicaCount: 1
 
+global:
+  #
+  # Credentials
+  #
+  keycloak_db_username: "admin"
+  keycloak_db_password: "changeit"
+  keycloak_admin: "admin"
+  keycloak_admin_password: "changeit"
+  keycloak_keystore_password: "changeit"
+  keycloak_truststore_password: changeit"
+  #
+  # Other Configuration
+  #
+  keycloak_url: "http://localhost/mcp"
+  keycloak_auth_url: "http://localhost/mcp/auth"
+  keycloak_admin_url: "http://localhost/mcp/auth"
+
 image:
   repository: ghcr.io/maritimeconnectivity/mcpkeycloakspi
   pullPolicy: Always

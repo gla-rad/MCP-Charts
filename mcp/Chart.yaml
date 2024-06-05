@@ -1,6 +1,6 @@
 apiVersion: v2
 name: mcp
-description: The top-level Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
+description: A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #

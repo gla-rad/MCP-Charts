@@ -21,5 +21,4 @@
 .idea/
 *.tmproj
 .vscode/
-# Do NOT load the config values - pass them manuall if required
-config/mcp-values.yaml
+

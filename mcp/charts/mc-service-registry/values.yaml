@@ -2,6 +2,28 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  #
+  # Credentials
+  #
+  msr_database_username: "admin"
+  msr_database_password: "changeit"
+  msr_keycloak_client_secret: "changeit"
+  msr_ledger_address: "0x000000000000000000000000000000000000000"
+  msr_ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+  #
+  # Other Configuration
+  #
+  keycloak_url: "http://localhost/mcp"
+  keycloak_realm: "MCP"
+  msr_database_type: "postgresql"
+  msr_database_host: "localhost"
+  msr_database_port: 5432
+  msr_keycloak_client_id: "mcpsvreg"
+  msr_ledger_host: "mc-msr-ledger.mcp"
+  msr_ledger_port: 8546
+
 replicaCount: 1
 
 image:
