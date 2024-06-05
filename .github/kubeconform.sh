@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-CHANGED_DIRS="$(git diff --find-renames --name-only remotes/origin/master -- charts)"
+CHANGED_DIRS="$(git diff --find-renames --name-only remotes/origin/master -- mcp)"
 # protect against a pipeline failure here
 CHART_DIRS=""
 if [[ -n $CHANGED_DIRS ]]; then
