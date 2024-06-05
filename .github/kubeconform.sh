@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu pipefail
 
-CHART_DIRS="$(git diff --find-renames --line-prefix='./' --name-only remotes/origin/master -- . | grep '[cC]hart.yaml' | sed -e 's/[Cc]hart.yaml//g')"
+CHART_DIRS="$(git diff --find-renames --line-prefix='./' --name-only remotes/origin/master -- charts | grep '[cC]hart.yaml' | sed -e 's/[Cc]hart.yaml//g')"
 KUBECONFORM_VERSION="v0.6.6"
 SCHEMA_LOCATION="https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master"
 

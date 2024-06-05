@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - '*'
+    paths:
+      - '/charts/**'
 
 jobs:
   lint-chart:
