@@ -5,7 +5,7 @@ on:
     branches:
       - '*'
     paths:
-      - '/charts/**'
+      - 'charts/**'
 
 jobs:
   lint-chart:
