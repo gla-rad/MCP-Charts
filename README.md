@@ -38,6 +38,10 @@ a certain configuration files. First there is the **value.yaml** which contains
 all the configuration parameters for all childern charts, but also a sert of
 keystores and truststores, mainly for the keycloak and the MIR modules.
 
+IMPORTANT: All binary files need to be encoded into Base64 beforehand since
+helm will not be able to load the otherwise. Plain text configuration files
+however can be provided as they are.
+
 ```bash
 helm install my-mcp mcp-charts/mcp --version 0.0.1 -f config/values.yaml \
     --set-file global.mir_api_config=config/application.yaml \
