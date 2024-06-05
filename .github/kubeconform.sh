@@ -1,7 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
-CHART_DIRS="$(git diff --find-renames --line-prefix='./' --name-only remotes/origin/master -- mcp | grep '[cC]hart.yaml' | sed -e 's/[Cc]hart.yaml//g')"
+CHANGED_DIRS="$(git diff --find-renames --name-only remotes/origin/master -- mcp)"
+# protect against a pipeline failure here
+CHART_DIRS=""
+if [[ -n $CHANGED_DIRS ]]; then
+    echo ${CHANGED_DIRS}
+    CHART_DIRS="$(echo "${CHANGED_DIRS}" | grep '[cC]hart.yaml' | sed -e 's/[Cc]hart.yaml//g')"
+fi
 KUBECONFORM_VERSION="v0.6.6"
 SCHEMA_LOCATION="https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master"
 
