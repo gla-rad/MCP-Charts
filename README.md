@@ -30,7 +30,7 @@ helm script.
 First you will need to install the MCP-Charts Helm repository:
 
 ```bash
-$ helm repo add mcp-charts https://gla-rad.github.io/MCP-Charts/
+helm repo add mcp-charts https://gla-rad.github.io/MCP-Charts/
 ```
 
 And the you can install it as follows. Note that you will need to provide
@@ -39,7 +39,7 @@ all the configuration parameters for all childern charts, but also a sert of
 keystores and truststores, mainly for the keycloak and the MIR modules.
 
 ```bash
-$ helm install my-mcp mcp-charts/mcp --version 0.0.1 \
+helm install my-mcp mcp-charts/mcp --version 0.0.1 -f config/values.yaml \
     --set-file global.mir_api_config=config/application.yaml \
     --set-file global.mir_api_keycloak_json=config/keycloak.json \
     --set-file global.mir_api_subca_keystore=config/subca-keystore.jks.b64 \
