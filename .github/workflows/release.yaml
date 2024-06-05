@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'mcp/**'
+      - '**'
 
 jobs:
   release:
