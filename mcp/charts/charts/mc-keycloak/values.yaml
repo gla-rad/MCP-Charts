@@ -2,9 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-
 global:
+  #
+  # Input Files
+  # 
+  keycloak_truststore: ""
+  keycloak_idbroker_updater: ""
   #
   # Credentials
   #
@@ -20,6 +23,8 @@ global:
   keycloak_url: "http://localhost/mcp"
   keycloak_auth_url: "http://localhost/mcp/auth"
   keycloak_admin_url: "http://localhost/mcp/auth"
+
+replicaCount: 1
 
 image:
   repository: ghcr.io/maritimeconnectivity/mcpkeycloakspi

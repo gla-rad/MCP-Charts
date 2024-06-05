@@ -4,6 +4,16 @@
 
 global:
   #
+  # Input Files
+  #
+  keycloak_truststore: ""
+  keycloak_idbroker_updater: ""
+  mir_api_config: ""
+  mir_api_keycloak_json: ""
+  mir_api_subca_keystore: ""
+  mir_api_truststore: ""
+
+  #
   # Credentials
   #
   keycloak_db_username: "admin"

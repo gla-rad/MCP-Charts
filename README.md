@@ -23,7 +23,34 @@ this were the official
 as well an other online resources such as
 [this](https://dev.to/jamiemagee/how-to-host-your-helm-chart-repository-on-github-3kd).
 
+## How to install
+To install the whole MCP platform in your kubernetes cluster you can use this
+helm script.
+
+First you will need to install the MCP-Charts Helm repository:
+
+```bash
+$ helm repo add mcp-charts https://gla-rad.github.io/MCP-Charts/
+```
+
+And the you can install it as follows. Note that you will need to provide
+a certain configuration files. First there is the **value.yaml** which contains
+all the configuration parameters for all childern charts, but also a sert of
+keystores and truststores, mainly for the keycloak and the MIR modules.
+
+```bash
+$ helm install my-mcp mcp-charts/mcp --version 0.0.1 \
+    --set-file global.mir_api_config=config/application.yaml \
+    --set-file global.mir_api_keycloak_json=config/keycloak.json \
+    --set-file global.mir_api_subca_keystore=config/subca-keystore.jks.b64 \
+    --set-file global.mir_api_truststore=config/mcp-truststore.jks.b64 \
+    --set-file global.keycloak_idbroker_updater=config/idbroker-updater.jks.b64 \
+    --set-file global.keycloak_truststore=config/root-ca-keystore.jks.b64 \
+```
+
 ## Chart Values
+Here is a list of all the chart configuration parameters that are available.
+
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | global.keycloak_admin | string | `"admin"` |  |

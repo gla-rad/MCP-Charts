@@ -2,6 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  #
+  # Input Files
+  #
+  mir_api_config: ""
+  mir_api_keycloak_json: ""
+  mir_api_subca_keystore: ""
+  mir_api_truststore: ""
+
 replicaCount: 1
 
 image:

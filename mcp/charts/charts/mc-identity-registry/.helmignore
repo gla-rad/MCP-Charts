@@ -22,5 +22,3 @@ truststores/
 .idea/
 *.tmproj
 .vscode/
-# The Identity Registry application properties YAML file
-application.yaml
