@@ -1,5 +1,12 @@
+
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mcp-charts)](https://artifacthub.io/packages/search?repo=mcp-charts)
+
 # MCP-Charts
 Kubernetes Helm Charts for deploying the Maritime Connectivity Platform (MCP)
+
+These Helm charts are also published and available throu the Helm
+[Artifact Hub](https://artifacthub.io) package manager. To access it please use
+the badge available on the top of this page.
 
 ## Description 
 This is a repository generated and currently maintened by the Research and
