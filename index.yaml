@@ -44,6 +44,18 @@ entries:
     urls:
     - https://github.com/gla-rad/MCP-Charts/releases/download/mc-service-registry-0.0.1/mc-service-registry-0.0.1.tgz
     version: 0.0.1
+  mcp:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-06-05T10:38:08.65430859Z"
+    description: A Helm chart for deploying the Maritime Connectivity Platform (MCP)
+      in Kubernetes
+    digest: 8b14cd163d9d7147e9cdb5f05f44be0f1ce188091a067e8672195abdc7dbfdf9
+    name: mcp
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mcp-0.0.1/mcp-0.0.1.tgz
+    version: 0.0.1
   mcp-management-portal:
   - apiVersion: v2
     appVersion: latest
@@ -55,4 +67,4 @@ entries:
     urls:
     - https://github.com/gla-rad/MCP-Charts/releases/download/mcp-management-portal-0.0.1/mcp-management-portal-0.0.1.tgz
     version: 0.0.1
-generated: "2024-06-04T09:45:12.659715412Z"
+generated: "2024-06-05T10:38:08.654315864Z"
