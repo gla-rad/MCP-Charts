@@ -1,0 +1,19 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Description
+Although the MIR has its own database, for its user authentication it actually
+uses an OIDC Keycloak service. This service can be deployed using this chart.
+
+The chart will spawn a keycloak service which will  involve three realms:
+* MCP: The core realm of the MIR
+* Users: A realm to control the users of the MCP
+* Certificates: A realm to control the generated certificates of the MIR
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

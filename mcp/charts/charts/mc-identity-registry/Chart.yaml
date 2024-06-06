@@ -22,3 +22,10 @@ version: 0.0.4
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "latest"
+
+home: "https://github.com/gla-rad/MCP-Charts/tree/master/mcp/charts/charts/mc-identity-registry"
+sources: ["https://github.com/gla-rad/MCP-Charts/tree/master/mcp/charts/charts/mc-identity-registry"]
+engine: gotpl
+maintainers:
+  - email: Nikolaos.Vastardis@gla-rad.org
+    name: Nikolaos Vastardis
