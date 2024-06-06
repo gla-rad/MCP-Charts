@@ -2,7 +2,7 @@ mcp
 ===
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
-Current chart version is `0.0.2`
+Current chart version is `0.0.4`
 
 
 

@@ -2,7 +2,7 @@ mc-msr-ledger
 =============
 A Helm chart for the MCP MSR ledger service
 
-Current chart version is `0.0.2`
+Current chart version is `0.0.4`
 
 
 

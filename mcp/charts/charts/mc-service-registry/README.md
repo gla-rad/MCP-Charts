@@ -2,7 +2,7 @@ mc-service-registry
 ===================
 A Helm chart for the MCP MSR service
 
-Current chart version is `0.0.2`
+Current chart version is `0.0.4`
 
 
 

@@ -2,7 +2,7 @@ mcp-management-portal
 =====================
 A Helm chart for the MCP Management Portal
 
-Current chart version is `0.0.2`
+Current chart version is `0.0.4`
 
 
 

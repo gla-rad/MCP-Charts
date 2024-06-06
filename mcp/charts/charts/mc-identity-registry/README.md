@@ -2,7 +2,7 @@ mc-identity-registry
 ====================
 A Helm chart for the MCP MIR service
 
-Current chart version is `0.0.1`
+Current chart version is `0.0.4`
 
 
 
