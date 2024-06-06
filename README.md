@@ -43,13 +43,13 @@ helm will not be able to load the otherwise. Plain text configuration files
 however can be provided as they are.
 
 ```bash
-helm install my-mcp mcp-charts/mcp --version 0.0.1 -f config/values.yaml \
+helm install grad mcp-charts/mcp -n mcp --version 0.0.4 -f config/values.yaml \
     --set-file global.mir_api_config=config/application.yaml \
     --set-file global.mir_api_keycloak_json=config/keycloak.json \
     --set-file global.mir_api_subca_keystore=config/subca-keystore.jks.b64 \
     --set-file global.mir_api_truststore=config/mcp-truststore.jks.b64 \
     --set-file global.keycloak_idbroker_updater=config/idbroker-updater.jks.b64 \
-    --set-file global.keycloak_truststore=config/root-ca-keystore.jks.b64 \
+    --set-file global.keycloak_truststore=config/root-ca-keystore.jks.b64
 ```
 
 ## Chart Values
