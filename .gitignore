@@ -24,3 +24,7 @@ go.work.sum
 # The configuration folder contents
 config/**
 !config/.placeholder
+
+# Various tools
+helm-docs
+kubeconform
