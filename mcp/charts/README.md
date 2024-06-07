@@ -1,8 +1,24 @@
 # mcp
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
-
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
+
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+
+## Description
+The the Maritime Connectivity Platform (MCP) is a decentralised platform that
+facilitates secure and reliable information exchange within the maritime domain
+and beyond. Beyond – because the maritime world isn’t isolated, but need to
+exchange information with other domain – for instance with other transport
+domains.
+
+The information exchanged can be almost of any nature, ranging from private
+confidential information between a vessel and the shore office of the shipowner,
+to public information provided by authorities, such as the provision of
+navigational warnings.
+
+As a decentralised platform, there is no single entity operating this. Several
+organisations are MCP service providers, and collectively they form “the
+Maritime Connectivity Platform”.
 
 ## Values
 

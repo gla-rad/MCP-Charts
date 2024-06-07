@@ -12,9 +12,8 @@ and
 which are core components of
 [Maritime Connectivity Platform](https://maritimeconnectivity.net/). The
 starting foundation of this project has been build from the
-[ngx-admin from Akveo](https://github.com/akveo/ngx-admin). This repository
-maintains a spin-off implementation of Management Portal under the Apache
-2.0 License.
+[ngx-admin from Akveo](https://github.com/akveo/ngx-admin). The spin-off
+implementation of Management Portal under the Apache 2.0 License.
 
 ## Live demo
 You can experience a live demo from

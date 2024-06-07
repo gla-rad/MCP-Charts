@@ -2,27 +2,24 @@
 
 A Helm chart for the MCP MSR service
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
-The MIR is responsible for identity management and providing security
-functionality to the entities of the MCP. In particular, the MIR will provide
-the following functionality:
+The MSR does not provide actual maritime information but a specification of
+various services, the information that they carry, and the technical means to
+obtain it. An MSR instance contains service specifications according to a
+Service Specification Standard (which is identical to
+[IALA Guideline 1128](https://www.iala-aism.org/product/g1128/)) and
+provisioned service instances implemented according to these service
+specifications.
 
-* Firstly, Identity Management: The MIR enables that each maritime entity (such
-  as a device, human, organization, service, or ship) can be registered as an
-  entity of the MCP and be equipped with a unique identity (by assigning a
-  Maritime Resource Name (MRN)).
-* Secondly, Public Key Infrastructure (PKI): The MIR ensures that each MCP
-  entity holds a corresponding cryptographic identity, ie a public / private key
-  pair and a certificate with the public key bound to their identity.
-* Thirdly, the MIR provides the infrastructure for authentication, which enables
-  authorization and secure integration of web services, based on the established
-  internet standards (OAUTH 2.0 / OpenID Connect).
-
-While the MIR will be distributed trustworthiness will be made transparent by
-the definition of MCP security profiles and the audited procedures MSP instance
-providers need to follow to adhere to them.
+The functionality of the MSR is twofold: service discovery and service
+management. It enables service providers to register their services in the MCP
+and allows an end-user to discover those services. Services and service
+instances can be searched via different criteria such as keywords,
+organizations, locations, or combinations, and more. The management of a service
+encapsulates the functions to publish a service specification and
+register/publish a service instance.
 
 ## Values
 
