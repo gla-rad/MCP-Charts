@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MIR service
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MIR is responsible for identity management and providing security
@@ -34,10 +34,12 @@ instance providers need to follow to adhere to them.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | fullnameOverride | string | `""` |  |
-| global.mir_api_config | string | `""` |  |
-| global.mir_api_keycloak_json | string | `""` |  |
-| global.mir_api_subca_keystore | string | `""` |  |
-| global.mir_api_truststore | string | `""` |  |
+| global.keycloak_realm | string | `"MCP"` |  |
+| global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.mc_identity_registry.configuration | string | `""` |  |
+| global.mc_identity_registry.keycloak_json | string | `""` |  |
+| global.mc_identity_registry.keystore | string | `""` |  |
+| global.mc_identity_registry.truststore | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/maritimeconnectivity/identityregistry"` |  |
 | image.tag | string | `""` |  |

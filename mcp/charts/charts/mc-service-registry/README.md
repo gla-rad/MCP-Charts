@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MSR service
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MSR does not provide actual maritime information but a specification of
@@ -72,22 +72,22 @@ register/publish a service instance.
 | env[8].valueFrom.secretKeyRef.key | string | `"msr_keycloak_client_secret"` |  |
 | env[8].valueFrom.secretKeyRef.name | string | `"mc-service-registry-secrets"` |  |
 | env[9].name | string | `"MCP_MIR_URL"` |  |
-| env[9].valueFrom.configMapKeyRef.key | string | `"mcp_identity_register_api_url"` |  |
+| env[9].valueFrom.configMapKeyRef.key | string | `"mcp_identity_registry_api_url"` |  |
 | env[9].valueFrom.configMapKeyRef.name | string | `"mc-service-registry-config"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
-| global.msr_database_host | string | `"localhost"` |  |
-| global.msr_database_password | string | `"changeit"` |  |
-| global.msr_database_port | int | `5432` |  |
-| global.msr_database_type | string | `"postgresql"` |  |
-| global.msr_database_username | string | `"admin"` |  |
-| global.msr_keycloak_client_id | string | `"mcpsvreg"` |  |
-| global.msr_keycloak_client_secret | string | `"changeit"` |  |
-| global.msr_ledger_address | string | `"0x000000000000000000000000000000000000000"` |  |
-| global.msr_ledger_credentials | string | `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` |  |
-| global.msr_ledger_host | string | `"mc-msr-ledger.mcp"` |  |
-| global.msr_ledger_port | int | `8546` |  |
+| global.mc_service_registry.db_host | string | `"localhost"` |  |
+| global.mc_service_registry.db_password | string | `"changeit"` |  |
+| global.mc_service_registry.db_port | int | `5432` |  |
+| global.mc_service_registry.db_type | string | `"postgresql"` |  |
+| global.mc_service_registry.db_username | string | `"admin"` |  |
+| global.mc_service_registry.keycloak_client_id | string | `"mcpsvreg"` |  |
+| global.mc_service_registry.keycloak_client_secret | string | `"changeit"` |  |
+| global.mc_service_registry.ledger_address | string | `"0x000000000000000000000000000000000000000"` |  |
+| global.mc_service_registry.ledger_credentials | string | `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` |  |
+| global.mc_service_registry.ledger_host | string | `"mc-msr-ledger.mcp"` |  |
+| global.mc_service_registry.ledger_port | int | `8546` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/maritimeconnectivity/serviceregistry"` |  |
 | image.tag | string | `""` |  |

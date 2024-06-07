@@ -3,21 +3,38 @@
 # Declare variables to be passed into your templates.
 
 global:
+
   #
-  # Other Configuration
+  # Common Variables
   #
   keycloak_url: "http://localhost/mcp"
-  mcp_portal_title: "MCP Testbed - Test Environment"
-  mcp_portal_name: "MCP Testbed"
-  mcp_portal_identity_provider_mrn_namespace: "mcp"
-  mcp_portal_identify_registry_url: "https://localhost/mcp/mir"
-  mcp_portal_identify_registry_provider: "Maritime Connectivity Platform"
-  mcp_portal_identify_registry_email: "test@email.org"
-  mcp_portal_service_registry_url: "https://mcp.grad-rrnav.pub/mcp/msr"
-  mcp_portal_service_registry_provider: "Maritime Connectivity Platform"
-  mcp_portal_service_registry_email: "test@email.org"
-  mcp_portal_management_portal_provider: "Maritime Connectivity Platform"
-  mcp_portal_management_portal_email: "test@email.org"
+  keycloak_realm: "MCP"
+
+  # The MCP Management Portal Chart
+  mcp_management_portal:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+    name: "MCP Testbed"
+    title: "MCP Testbed - Test Environment"
+    identity_provider_mrn_namespace: "mcp"
+    identity_registry_url: "https://localhost/mcp/mir"
+    identity_registry_provider: "Maritime Connectivity Platform"
+    identity_registry_email: "test@email.org"
+    service_registry_url: "https://mcp.grad-rrnav.pub/mcp/msr"
+    service_registry_provider: "Maritime Connectivity Platform"
+    service_registry_email: "test@email.org"
+    management_portal_provider: "Maritime Connectivity Platform"
+    management_portal_email: "test@email.org"
+
 
 replicaCount: 1
 

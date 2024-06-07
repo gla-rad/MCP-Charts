@@ -2,7 +2,7 @@
 
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The the Maritime Connectivity Platform (MCP) is a decentralised platform that
@@ -24,48 +24,51 @@ Maritime Connectivity Platform”.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global.keycloak_admin | string | `"admin"` |  |
-| global.keycloak_admin_password | string | `"changeit"` |  |
-| global.keycloak_admin_url | string | `"http://localhost/mcp/auth"` |  |
-| global.keycloak_auth_url | string | `"http://localhost/mcp/auth"` |  |
-| global.keycloak_db_password | string | `"changeit"` |  |
-| global.keycloak_db_type | string | `"postgres"` |  |
-| global.keycloak_db_url | string | `"jdbc:postgresql://localhost/keycloak_mcp"` |  |
-| global.keycloak_db_username | string | `"admin"` |  |
-| global.keycloak_idbroker_updater | string | `""` |  |
-| global.keycloak_keystore_password | string | `"changeit"` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
-| global.keycloak_truststore | string | `""` |  |
-| global.keycloak_truststore_password | string | `"changeit\""` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
-| global.mcp_identity_register_api_url | string | `"http://localhost/mcp/mir/oidc/api"` |  |
-| global.mcp_identity_register_url | string | `"http://localhost/mcp/mir"` |  |
-| global.mcp_portal_identify_registry_email | string | `"test@email.org"` |  |
-| global.mcp_portal_identify_registry_provider | string | `"Maritime Connectivity Platform"` |  |
-| global.mcp_portal_identify_registry_url | string | `"https://localhost/mcp/mir"` |  |
-| global.mcp_portal_identity_provider_mrn_namespace | string | `"mcp"` |  |
-| global.mcp_portal_management_portal_email | string | `"test@email.org"` |  |
-| global.mcp_portal_management_portal_provider | string | `"Maritime Connectivity Platform"` |  |
-| global.mcp_portal_name | string | `"MCP Testbed"` |  |
-| global.mcp_portal_service_registry_email | string | `"test@email.org"` |  |
-| global.mcp_portal_service_registry_provider | string | `"Maritime Connectivity Platform"` |  |
-| global.mcp_portal_service_registry_url | string | `"https://mcp.grad-rrnav.pub/mcp/msr"` |  |
-| global.mcp_portal_title | string | `"MCP Testbed - Test Environment"` |  |
-| global.mir_api_config | string | `""` |  |
-| global.mir_api_keycloak_json | string | `""` |  |
-| global.mir_api_subca_keystore | string | `""` |  |
-| global.mir_api_truststore | string | `""` |  |
-| global.msr_database_host | string | `"localhost"` |  |
-| global.msr_database_password | string | `"changeit"` |  |
-| global.msr_database_port | int | `5432` |  |
-| global.msr_database_type | string | `"postgresql"` |  |
-| global.msr_database_username | string | `"admin"` |  |
-| global.msr_keycloak_client_id | string | `"mcpsvreg"` |  |
-| global.msr_keycloak_client_secret | string | `"changeit"` |  |
-| global.msr_ledger_address | string | `"0x000000000000000000000000000000000000000"` |  |
-| global.msr_ledger_credentials | string | `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` |  |
-| global.msr_ledger_host | string | `"mc-msr-ledger.mcp"` |  |
-| global.msr_ledger_port | int | `8546` |  |
+| global.mc_identity_registry.configuration | string | `""` |  |
+| global.mc_identity_registry.keycloak_json | string | `""` |  |
+| global.mc_identity_registry.keystore | string | `""` |  |
+| global.mc_identity_registry.truststore | string | `""` |  |
+| global.mc_keycloak.admin_password | string | `"changeit"` |  |
+| global.mc_keycloak.admin_url | string | `"http://localhost/mcp/auth"` |  |
+| global.mc_keycloak.admin_username | string | `"admin"` |  |
+| global.mc_keycloak.auth_url | string | `"http://localhost/mcp/auth"` |  |
+| global.mc_keycloak.db_password | string | `"changeit"` |  |
+| global.mc_keycloak.db_type | string | `"postgres"` |  |
+| global.mc_keycloak.db_url | string | `"jdbc:postgresql://localhost/keycloak_mcp"` |  |
+| global.mc_keycloak.db_username | string | `"admin"` |  |
+| global.mc_keycloak.keystore | string | `""` |  |
+| global.mc_keycloak.keystore_password | string | `"changeit"` |  |
+| global.mc_keycloak.mir_url | string | `"http://localhost/mcp/mir"` |  |
+| global.mc_keycloak.truststore | string | `""` |  |
+| global.mc_keycloak.truststore_password | string | `"changeit"` |  |
+| global.mc_mms_edge_router | string | `nil` |  |
+| global.mc_mms_router | string | `nil` |  |
+| global.mc_msr_ledger | string | `nil` |  |
+| global.mc_service_registry.db_host | string | `"localhost"` |  |
+| global.mc_service_registry.db_password | string | `"changeit"` |  |
+| global.mc_service_registry.db_port | int | `5432` |  |
+| global.mc_service_registry.db_type | string | `"postgresql"` |  |
+| global.mc_service_registry.db_username | string | `"admin"` |  |
+| global.mc_service_registry.keycloak_client_id | string | `"mcpsvreg"` |  |
+| global.mc_service_registry.keycloak_client_secret | string | `"changeit"` |  |
+| global.mc_service_registry.ledger_address | string | `"0x000000000000000000000000000000000000000"` |  |
+| global.mc_service_registry.ledger_credentials | string | `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` |  |
+| global.mc_service_registry.ledger_host | string | `"mc-msr-ledger.mcp"` |  |
+| global.mc_service_registry.ledger_port | int | `8546` |  |
+| global.mc_service_registry.mir_api_url | string | `"http://localhost/mcp/mir/oidc/api"` |  |
+| global.mcp_management_portal.identity_provider_mrn_namespace | string | `"mcp"` |  |
+| global.mcp_management_portal.identity_registry_email | string | `"test@email.org"` |  |
+| global.mcp_management_portal.identity_registry_provider | string | `"Maritime Connectivity Platform"` |  |
+| global.mcp_management_portal.identity_registry_url | string | `"https://localhost/mcp/mir"` |  |
+| global.mcp_management_portal.management_portal_email | string | `"test@email.org"` |  |
+| global.mcp_management_portal.management_portal_provider | string | `"Maritime Connectivity Platform"` |  |
+| global.mcp_management_portal.name | string | `"MCP Testbed"` |  |
+| global.mcp_management_portal.service_registry_email | string | `"test@email.org"` |  |
+| global.mcp_management_portal.service_registry_provider | string | `"Maritime Connectivity Platform"` |  |
+| global.mcp_management_portal.service_registry_url | string | `"https://mcp.grad-rrnav.pub/mcp/msr"` |  |
+| global.mcp_management_portal.title | string | `"MCP Testbed - Test Environment"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$1$2"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
 | ingress.className | string | `"nginx"` |  |

@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MSR ledger service
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MCP Service Registry service, or MSR for short, assumes the role of a
@@ -27,6 +27,9 @@ which MSR to contact to get the actual service endpoint for a service instance.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | fullnameOverride | string | `""` |  |
+| global.keycloak_realm | string | `"MCP"` |  |
+| global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.mc_msr_ledger | string | `nil` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"mcpnet/msr-ledger-client"` |  |
 | image.tag | string | `""` |  |

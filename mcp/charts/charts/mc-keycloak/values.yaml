@@ -3,26 +3,37 @@
 # Declare variables to be passed into your templates.
 
 global:
+
   #
-  # Input Files
-  # 
-  keycloak_truststore: ""
-  keycloak_idbroker_updater: ""
-  #
-  # Credentials
-  #
-  keycloak_db_username: "admin"
-  keycloak_db_password: "changeit"
-  keycloak_admin: "admin"
-  keycloak_admin_password: "changeit"
-  keycloak_keystore_password: "changeit"
-  keycloak_truststore_password: changeit"
-  #
-  # Other Configuration
+  # Common Variables
   #
   keycloak_url: "http://localhost/mcp"
-  keycloak_auth_url: "http://localhost/mcp/auth"
-  keycloak_admin_url: "http://localhost/mcp/auth"
+  keycloak_realm: "MCP"
+
+  # The MCP Keycloak Chart
+  mc_keycloak:
+    #
+    # Input Files
+    # 
+    keystore: ""
+    truststore: ""
+    #
+    # Credentials
+    #
+    db_username: "admin"
+    db_password: "changeit"
+    admin_username: "admin"
+    admin_password: "changeit"
+    keystore_password: "changeit"
+    truststore_password: changeit"
+    #
+    # Other Configuration
+    #
+    db_type: "postgres"
+    db_url: "jdbc:postgresql://localhost/keycloak_mcp"
+    auth_url: "http://localhost/mcp/auth"
+    admin_url: "http://localhost/mcp/auth"
+    mir_url: "http://localhost/mcp/mir"
 
 replicaCount: 1
 
@@ -140,7 +151,7 @@ env:
     valueFrom:
       configMapKeyRef:
         name: mc-keycloak-config
-        key: mcp_identity_register_url
+        key: mcp_identity_registry_url
   - name: KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PATH
     value: "/mc-eventprovider-conf/idbroker-updater.jks"
   - name: KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PASSWORD

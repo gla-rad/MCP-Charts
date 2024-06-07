@@ -4,14 +4,14 @@ metadata:
   name: mcp-management-portal-config
 data:
   mcp_portal_keycloak_url: {{ .Values.global.keycloak_url | quote }}
-  mcp_portal_title: {{ .Values.global.mcp_portal_title | quote }}
-  mcp_portal_name: {{ .Values.global.mcp_portal_name | quote }}
-  mcp_portal_identity_provider_mrn_namespace: {{ .Values.global.mcp_portal_identity_provider_mrn_namespace | quote }}
-  mcp_portal_identity_registry_url: {{ .Values.global.mcp_portal_identify_registry_url | quote }}
-  mcp_portal_identity_registry_provider: {{ .Values.global.mcp_portal_identify_registry_provider | quote }}
-  mcp_portal_identity_registry_email: {{ .Values.global.mcp_portal_identify_registry_email | quote }}
-  mcp_portal_service_registry_url: {{ .Values.global.mcp_portal_service_registry_url | quote }}
-  mcp_portal_service_registry_provider: {{ .Values.global.mcp_portal_service_registry_provider | quote }}
-  mcp_portal_service_registry_email: {{ .Values.global.mcp_portal_service_registry_email | quote }}
-  mcp_portal_management_portal_provider: {{ .Values.global.mcp_portal_management_portal_provider | quote }}
-  mcp_portal_management_portal_email: {{ .Values.global.mcp_portal_management_portal_email | quote }}
+  mcp_portal_name: {{ .Values.global.mcp_management_portal.name | quote }}
+  mcp_portal_title: {{ .Values.global.mcp_management_portal.title | quote }}
+  mcp_portal_identity_provider_mrn_namespace: {{ .Values.global.mcp_management_portal.identity_provider_mrn_namespace | quote }}
+  mcp_portal_identity_registry_url: {{ .Values.global.mcp_management_portal.identity_registry_url | quote }}
+  mcp_portal_identity_registry_provider: {{ .Values.global.mcp_management_portal.identity_registry_provider | quote }}
+  mcp_portal_identity_registry_email: {{ .Values.global.mcp_management_portal.identity_registry_email | quote }}
+  mcp_portal_service_registry_url: {{ .Values.global.mcp_management_portal.service_registry_url | quote }}
+  mcp_portal_service_registry_provider: {{ .Values.global.mcp_management_portal.service_registry_provider | quote }}
+  mcp_portal_service_registry_email: {{ .Values.global.mcp_management_portal.service_registry_email | quote }}
+  mcp_portal_management_portal_provider: {{ .Values.global.mcp_management_portal.management_portal_provider | quote }}
+  mcp_portal_management_portal_email: {{ .Values.global.mcp_management_portal.management_portal_email | quote }}

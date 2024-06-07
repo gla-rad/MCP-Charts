@@ -3,59 +3,150 @@
 # Declare variables to be passed into your templates.
 
 global:
-  #
-  # Input Files
-  #
-  keycloak_truststore: ""
-  keycloak_idbroker_updater: ""
-  mir_api_config: ""
-  mir_api_keycloak_json: ""
-  mir_api_subca_keystore: ""
-  mir_api_truststore: ""
 
   #
-  # Credentials
-  #
-  keycloak_db_username: "admin"
-  keycloak_db_password: "changeit"
-  keycloak_admin: "admin"
-  keycloak_admin_password: "changeit"
-  keycloak_keystore_password: "changeit"
-  keycloak_truststore_password: changeit"
-  msr_database_username: "admin"
-  msr_database_password: "changeit"
-  msr_keycloak_client_secret: "changeit"
-  msr_ledger_address: "0x000000000000000000000000000000000000000"
-  msr_ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-
-  #
-  # Other Configuration
+  # Common Variables
   #
   keycloak_url: "http://localhost/mcp"
-  keycloak_auth_url: "http://localhost/mcp/auth"
-  keycloak_admin_url: "http://localhost/mcp/auth"
   keycloak_realm: "MCP"
-  keycloak_db_type: "postgres"
-  keycloak_db_url: "jdbc:postgresql://localhost/keycloak_mcp"
-  mcp_identity_register_url: "http://localhost/mcp/mir"
-  mcp_identity_register_api_url: "http://localhost/mcp/mir/oidc/api"
-  msr_database_type: "postgresql"
-  msr_database_host: "localhost"
-  msr_database_port: 5432
-  msr_keycloak_client_id: "mcpsvreg"
-  msr_ledger_host: "mc-msr-ledger.mcp"
-  msr_ledger_port: 8546
-  mcp_portal_title: "MCP Testbed - Test Environment"
-  mcp_portal_name: "MCP Testbed"
-  mcp_portal_identity_provider_mrn_namespace: "mcp"
-  mcp_portal_identify_registry_url: "https://localhost/mcp/mir"
-  mcp_portal_identify_registry_provider: "Maritime Connectivity Platform"
-  mcp_portal_identify_registry_email: "test@email.org"
-  mcp_portal_service_registry_url: "https://mcp.grad-rrnav.pub/mcp/msr"
-  mcp_portal_service_registry_provider: "Maritime Connectivity Platform"
-  mcp_portal_service_registry_email: "test@email.org"
-  mcp_portal_management_portal_provider: "Maritime Connectivity Platform"
-  mcp_portal_management_portal_email: "test@email.org"
+
+  #
+  # Per Child-Chart
+  #
+
+  # The MCP Keycloak Chart
+  mc_keycloak:
+    #
+    # Input Files
+    # 
+    keystore: ""
+    truststore: ""
+    #
+    # Credentials
+    #
+    db_username: "admin"
+    db_password: "changeit"
+    admin_username: "admin"
+    admin_password: "changeit"
+    keystore_password: "changeit"
+    truststore_password: "changeit"
+    #
+    # Other Configuration
+    #
+    db_type: "postgres"
+    db_url: "jdbc:postgresql://localhost/keycloak_mcp"
+    auth_url: "http://localhost/mcp/auth"
+    admin_url: "http://localhost/mcp/auth"
+    mir_url: "http://localhost/mcp/mir"
+
+  # The Identity Registry Chart
+  mc_identity_registry:
+    #
+    # Input Files
+    #
+    configuration: ""
+    keycloak_json: ""
+    keystore: ""
+    truststore: ""
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+  
+  # The Service Registry Chart
+  mc_service_registry:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    db_username: "admin"
+    db_password: "changeit"
+    keycloak_client_secret: "changeit"
+    ledger_address: "0x000000000000000000000000000000000000000"
+    ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    #
+    # Other Configuration
+    #
+    db_type: "postgresql"
+    db_host: "localhost"
+    db_port: 5432
+    keycloak_client_id: "mcpsvreg"
+    mir_api_url: "http://localhost/mcp/mir/oidc/api"
+    ledger_host: "mc-msr-ledger.mcp"
+    ledger_port: 8546
+  
+  # The MSR Ledger Chart
+  mc_msr_ledger:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+  
+  # The MMS Router Chart
+  mc_mms_router:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+  
+  # The MMS Edge Router Chart
+  mc_mms_edge_router:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+  
+  # The MCP Management Portal Chart
+  mcp_management_portal:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+    name: "MCP Testbed"
+    title: "MCP Testbed - Test Environment"
+    identity_provider_mrn_namespace: "mcp"
+    identity_registry_url: "https://localhost/mcp/mir"
+    identity_registry_provider: "Maritime Connectivity Platform"
+    identity_registry_email: "test@email.org"
+    service_registry_url: "https://mcp.grad-rrnav.pub/mcp/msr"
+    service_registry_provider: "Maritime Connectivity Platform"
+    service_registry_email: "test@email.org"
+    management_portal_provider: "Maritime Connectivity Platform"
+    management_portal_email: "test@email.org"
 
 # The ingress is defined in the top level
 ingress:

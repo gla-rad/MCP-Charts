@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP keycloak service
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 Although the MIR has its own database, for its user authentication it actually
@@ -55,22 +55,26 @@ The chart will spawn a keycloak service which will  involve three realms:
 | env[7].valueFrom.secretKeyRef.key | string | `"keycloak_admin_password"` |  |
 | env[7].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
 | env[8].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_SERVER_ROOT"` |  |
-| env[8].valueFrom.configMapKeyRef.key | string | `"mcp_identity_register_url"` |  |
+| env[8].valueFrom.configMapKeyRef.key | string | `"mcp_identity_registry_url"` |  |
 | env[8].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
 | env[9].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PATH"` |  |
 | env[9].value | string | `"/mc-eventprovider-conf/idbroker-updater.jks"` |  |
 | fullnameOverride | string | `""` |  |
-| global.keycloak_admin | string | `"admin"` |  |
-| global.keycloak_admin_password | string | `"changeit"` |  |
-| global.keycloak_admin_url | string | `"http://localhost/mcp/auth"` |  |
-| global.keycloak_auth_url | string | `"http://localhost/mcp/auth"` |  |
-| global.keycloak_db_password | string | `"changeit"` |  |
-| global.keycloak_db_username | string | `"admin"` |  |
-| global.keycloak_idbroker_updater | string | `""` |  |
-| global.keycloak_keystore_password | string | `"changeit"` |  |
-| global.keycloak_truststore | string | `""` |  |
-| global.keycloak_truststore_password | string | `"changeit\""` |  |
+| global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.mc_keycloak.admin_password | string | `"changeit"` |  |
+| global.mc_keycloak.admin_url | string | `"http://localhost/mcp/auth"` |  |
+| global.mc_keycloak.admin_username | string | `"admin"` |  |
+| global.mc_keycloak.auth_url | string | `"http://localhost/mcp/auth"` |  |
+| global.mc_keycloak.db_password | string | `"changeit"` |  |
+| global.mc_keycloak.db_type | string | `"postgres"` |  |
+| global.mc_keycloak.db_url | string | `"jdbc:postgresql://localhost/keycloak_mcp"` |  |
+| global.mc_keycloak.db_username | string | `"admin"` |  |
+| global.mc_keycloak.keystore | string | `""` |  |
+| global.mc_keycloak.keystore_password | string | `"changeit"` |  |
+| global.mc_keycloak.mir_url | string | `"http://localhost/mcp/mir"` |  |
+| global.mc_keycloak.truststore | string | `""` |  |
+| global.mc_keycloak.truststore_password | string | `"changeit\""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/maritimeconnectivity/mcpkeycloakspi"` |  |
 | image.tag | string | `""` |  |

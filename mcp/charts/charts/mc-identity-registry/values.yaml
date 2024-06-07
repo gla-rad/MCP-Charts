@@ -4,12 +4,27 @@
 
 global:
   #
-  # Input Files
+  # Common Variables
   #
-  mir_api_config: ""
-  mir_api_keycloak_json: ""
-  mir_api_subca_keystore: ""
-  mir_api_truststore: ""
+  keycloak_url: "http://localhost/mcp"
+  keycloak_realm: "MCP"
+
+  # The Identity Registry Chart
+  mc_identity_registry:
+    #
+    # Input Files
+    #
+    configuration: ""
+    keycloak_json: ""
+    keystore: ""
+    truststore: ""
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
 
 replicaCount: 1
 

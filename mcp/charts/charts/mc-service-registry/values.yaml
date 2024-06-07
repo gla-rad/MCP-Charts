@@ -3,26 +3,36 @@
 # Declare variables to be passed into your templates.
 
 global:
-  #
-  # Credentials
-  #
-  msr_database_username: "admin"
-  msr_database_password: "changeit"
-  msr_keycloak_client_secret: "changeit"
-  msr_ledger_address: "0x000000000000000000000000000000000000000"
-  msr_ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
   #
-  # Other Configuration
+  # Common Variables
   #
   keycloak_url: "http://localhost/mcp"
   keycloak_realm: "MCP"
-  msr_database_type: "postgresql"
-  msr_database_host: "localhost"
-  msr_database_port: 5432
-  msr_keycloak_client_id: "mcpsvreg"
-  msr_ledger_host: "mc-msr-ledger.mcp"
-  msr_ledger_port: 8546
+
+  # The Service Registry Chart
+  mc_service_registry:
+    #
+    # Input Files
+    #
+
+    #
+    # Credentials
+    #
+    db_username: "admin"
+    db_password: "changeit"
+    keycloak_client_secret: "changeit"
+    ledger_address: "0x000000000000000000000000000000000000000"
+    ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    #
+    # Other Configuration
+    #
+    db_type: "postgresql"
+    db_host: "localhost"
+    db_port: 5432
+    keycloak_client_id: "mcpsvreg"
+    ledger_host: "mc-msr-ledger.mcp"
+    ledger_port: 8546
 
 replicaCount: 1
 
@@ -147,7 +157,7 @@ env:
   valueFrom:
     configMapKeyRef:
       name: mc-service-registry-config
-      key: mcp_identity_register_api_url
+      key: mcp_identity_registry_api_url
 - name: MCP_LEDGER_HOST
   valueFrom:
     configMapKeyRef:

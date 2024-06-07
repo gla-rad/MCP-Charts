@@ -4,8 +4,9 @@ metadata:
   name: mc-keycloak-config
 data:
   keycloak_url: {{ .Values.global.keycloak_url | quote }}
-  keycloak_auth_url: {{ .Values.global.keycloak_auth_url | quote }}
-  keycloak_admin_url: {{ .Values.global.keycloak_admin_url | quote }}
-  keycloak_db_type: {{ .Values.global.keycloak_db_type | quote }}
-  keycloak_db_url: {{ .Values.global.keycloak_db_url | quote }}
-  mcp_identity_register_url: {{ .Values.global.mcp_identity_register_url | quote }}
+  keycloak_auth_url: {{ .Values.global.mc_keycloak.auth_url | quote }}
+  keycloak_admin_url: {{ .Values.global.mc_keycloak.admin_url | quote }}
+  keycloak_db_type: {{ .Values.global.mc_keycloak.db_type | quote }}
+  keycloak_db_url: {{ .Values.global.mc_keycloak.db_url | quote }}
+  mcp_identity_registry_url: {{ .Values.global.mc_keycloak.mir_url | quote }}
+
