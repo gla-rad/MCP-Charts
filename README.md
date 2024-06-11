@@ -59,7 +59,8 @@ keystores and truststores, mainly for the keycloak and the MIR modules.
 
 IMPORTANT: All binary files need to be encoded into Base64 beforehand since
 helm will not be able to load the otherwise. Plain text configuration files
-however can be provided as they are.
+however can be provided as they are. Also the private key provided, need to
+be PEM encoded ECDSA, in PKCS1 format.
 
 ```bash
 helm install grad ./mcp/charts/ -n mcp -f config/values.yaml \
@@ -69,7 +70,7 @@ helm install grad ./mcp/charts/ -n mcp -f config/values.yaml \
     --set-file global.mc_identity_registry.keycloak_json=config/keycloak.json \
     --set-file global.mc_identity_registry.keystore=config/subca-keystore.jks.b64 \
     --set-file global.mc_identity_registry.truststore=config/mcp-truststore.jks.b64 \
-    --set-file global.mc_mms_router.private_key=config/router-cert-key.pem \
+    --set-file global.mc_mms_router.private_key=config/router-cert-key.pkcs \
     --set-file global.mc_mms_router.certificate=config/router-cert.pem \
     --set-file global.mc_mms_router.certificate_key=config/router-cert-key.pem  \
     --set-file global.mc_mms_router.client_ca=config/ca-chain.pem \
