@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mc-mms-router.fullname" . }}
+  labels:
+    {{- include "mc-mms-router.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.port_libp2p }}
+      targetPort: libp2p
+      protocol: TCP
+      name: libp2p
+  selector:
+    {{- include "mc-mms-router.selectorLabels" . | nindent 4 }}

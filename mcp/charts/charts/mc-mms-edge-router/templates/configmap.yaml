@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mc-mms-edge-router-config
+data:
+  port: {{ .Values.global.mc_mms_edge_router.port | quote }}
+  mrn: {{ .Values.global.mc_mms_edge_router.mrn | quote }}
+  router_address: {{ printf "wss://%s-%s" .Release.Name .Values.global.mc_mms_edge_router.router_address }}

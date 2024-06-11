@@ -30,7 +30,7 @@ The are two scripts included in the workflows:
   conforms to the a given kubernetes schema. The **KUBERNETES_VERSION**
   environment parameter is requiered for this action.
 
-Just run the two script in the top level directory are follows:
+Just run the two scripts from the top level directory are follows:
 
 ```
 $ .github/helm-docs.sh
@@ -53,8 +53,8 @@ helm repo add mcp-charts https://gla-rad.github.io/MCP-Charts/
 ```
 
 And the you can install it as follows. Note that you will need to provide
-a certain configuration files. First there is the **value.yaml** which contains
-all the configuration parameters for all childern charts, but also a sert of
+a certain configuration files. First there is the **values.yaml** which contains
+all the configuration parameters for all childern charts, but also a set of
 keystores and truststores, mainly for the keycloak and the MIR modules.
 
 IMPORTANT: All binary files need to be encoded into Base64 beforehand since
@@ -62,16 +62,26 @@ helm will not be able to load the otherwise. Plain text configuration files
 however can be provided as they are.
 
 ```bash
-helm install grad mcp-charts/mcp -n mcp -f config/values.yaml \
+helm install grad ./mcp/charts/ -n mcp -f config/values.yaml \
     --set-file global.mc_keycloak.keystore=config/idbroker-updater.jks.b64 \
     --set-file global.mc_keycloak.truststore=config/root-ca-keystore.jks.b64 \
     --set-file global.mc_identity_registry.configuration=config/application.yaml \
     --set-file global.mc_identity_registry.keycloak_json=config/keycloak.json \
     --set-file global.mc_identity_registry.keystore=config/subca-keystore.jks.b64 \
-    --set-file global.mc_identity_registry.truststore=config/mcp-truststore.jks.b64
+    --set-file global.mc_identity_registry.truststore=config/mcp-truststore.jks.b64 \
+    --set-file global.mc_mms_router.private_key=config/router-cert-key.pem \
+    --set-file global.mc_mms_router.certificate=config/router-cert.pem \
+    --set-file global.mc_mms_router.certificate_key=config/router-cert-key.pem  \
+    --set-file global.mc_mms_router.client_ca=config/ca-chain.pem \
+    --set-file global.mc_mms_router.beacons=config/beacons.txt \
+    --set-file global.mc_mms_edge_router.certificate=config/edge-router-cert.pem \
+    --set-file global.mc_mms_edge_router.certificate_key=config/edge-router-cert-key.pem  \
+    --set-file global.mc_mms_edge_router.client_certificate=config/edge-router-cert.pem \
+    --set-file global.mc_mms_edge_router.client_certificate_key=config/edge-router-cert-key.pem \
+    --set-file global.mc_mms_edge_router.client_ca=config/ca-chain.pem
 ```
 
-## Values
+## Configuration Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|

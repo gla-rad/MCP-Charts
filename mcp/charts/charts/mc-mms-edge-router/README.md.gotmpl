@@ -1,0 +1,45 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Description
+The MMS system architecture defines the following components:
+* MMS Agents
+* MMS Edge Routers
+* MMS Router Network
+
+and the following protocols:
+* Maritime Message Transfer Protocol (MMTP)
+* Secure Maritime Message Protocol (SMMP)
+
+System Actors (short Actors) in the document are systems, personal devices and
+applications using the MMS. Actors run/use different applications, which
+interact with other Actors through an MMS Agent. All MMS Agents that want to
+send messages and receive MRN addressed messages, must be authenticated with a
+MMS Edge Router using MCP certificate from MSS Agents MCP MRN. All messages from
+MMS Agents must be authenticated (signed) with certificate from sending MCP MRN.
+MMTP only provides message authentication. Messages between Actors may be sent
+via the SMMP to provide further security guarantees.
+
+The MMS Router Network consists of zero or more MMS Routers. The Router Network
+shall handle message routing and forwarding between MMS Edge Routers. The Router
+Network shall have the capability to exchange the knowledge about subscribed MMS
+Agents, and subjects between each other. An MMS Router handles MMS message
+transport for a set of connected MMS Edge Routers, that subscribe to a set of
+specific subjects and/or specific MRNs on behalf of their subscribed MMS Agents.
+
+An MMS Router queues messages that an MMS Edge Router has subscribed to until
+they are fetched by that MMS Edge Router. An MMS Router may delete stored
+subscriptions and queued messages after a configured timeout occurs.
+
+The MMS Router Network may handle the transfer of stored subscriptions and
+queued messages between the MMS Routers in case an MMS Edge Router roams from
+one MMS Router to another.
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

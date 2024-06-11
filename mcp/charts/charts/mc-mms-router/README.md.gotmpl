@@ -1,0 +1,42 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Description
+The MMS system architecture defines the following components:
+* MMS Agents
+* MMS Edge Routers
+* MMS Router Network
+
+and the following protocols:
+* Maritime Message Transfer Protocol (MMTP)
+* Secure Maritime Message Protocol (SMMP)
+
+System Actors (short Actors) in the document are systems, personal devices and
+applications using the MMS. Actors run/use different applications, which
+interact with other Actors through an MMS Agent. All MMS Agents that want to
+send messages and receive MRN addressed messages, must be authenticated with a
+MMS Edge Router using MCP certificate from MSS Agents MCP MRN. All messages from
+MMS Agents must be authenticated (signed) with certificate from sending MCP MRN.
+MMTP only provides message authentication. Messages between Actors may be sent
+via the SMMP to provide further security guarantees.
+
+An MMS Router Network consists of zero or more MMS Routers. An MMS Edge Router
+shall perform domain specific operations needed in the intended installation
+location, such as supporting multiple communication links.
+
+The MMS is designed to support message transfer between routers over different
+connection types, i.e. TCP/IP and VDES.
+
+The Agent - Router Network Interface uses the Maritime Messaging Transfer
+Protocol (MMTP). The MMTP facilitates the transfer of messages from MMS Agent
+ through MMS Edge Routers and the MMS Router Network to one or multiple 
+ eceiving MMS Agents.
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

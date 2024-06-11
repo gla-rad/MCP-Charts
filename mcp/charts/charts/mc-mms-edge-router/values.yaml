@@ -1,0 +1,191 @@
+# Default values for mc-mms-edge-router.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+
+  #
+  # Common Variables
+  #
+  keycloak_url: "http://localhost/mcp"
+  keycloak_realm: "MCP"
+
+  # The MMS Edge Router Chart
+  mc_mms_edge_router:
+    #
+    # Input Files
+    #
+    client_certificate: ""
+    client_certificate_key: ""
+    certificate: ""
+    certificate_key: ""
+    client_ca: ""
+
+    #
+    # Credentials
+    #
+    
+    #
+    # Other Configuration
+    #
+    port: 8080
+    mrn: ""
+    router_address: "mc-mms-router.mcp:8080"
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/gla-rad/mc-mms-edgerouter
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+  port_libp2p: 9000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+env:
+- name: CLIENT_CERT_PATH
+  value: "/conf/cc.crt"
+- name: CLIENT_CERT_KEY_PATH
+  value: "/conf/ccpk.key"
+- name: CERT_PATH
+  value: "/conf/tls.crt"
+- name: CERT_KEY_PATH
+  value: "/conf/tlspk.key"
+- name: CLIENT_CA
+  value: "/conf/ca-chain.pem"
+- name: PORT
+  valueFrom:
+    configMapKeyRef:
+      name: mc-mms-edge-router-config
+      key: port
+- name: MRN
+  valueFrom:
+    configMapKeyRef:
+      name: mc-mms-edge-router-config
+      key: mrn
+- name: RADDR
+  valueFrom:
+    configMapKeyRef:
+      name: mc-mms-edge-router-config
+      key: router_address
+
+# livenessProbe:
+#   httpGet:
+#     path: /
+#     port: http
+# readinessProbe:
+#   httpGet:
+#     path: /
+#     port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes:
+- name: config-volume
+  projected:
+    sources:
+    - secret:
+        name: mc-mms-edge-router-secrets
+        items:
+        - key: client_certificate
+          path: cc.crt
+    - secret:
+        name: mc-mms-edge-router-secrets
+        items:
+        - key: client_certificate_key
+          path: ccpk.key
+    - secret:
+        name: mc-mms-edge-router-secrets
+        items:
+        - key: certificate
+          path: tls.crt
+    - secret:
+        name: mc-mms-edge-router-secrets
+        items:
+        - key: certificate_key
+          path: tlspk.key
+    - secret:
+        name: mc-mms-edge-router-secrets
+        items:
+        - key: client_ca
+          path: ca-chain.pem
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+- name: config-volume
+  mountPath: "/conf"
+  readOnly: true
+
+nodeSelector: {
+  "kubernetes.io/os": linux
+}
+
+tolerations: []
+
+affinity: {}

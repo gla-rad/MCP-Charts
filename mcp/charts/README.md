@@ -2,7 +2,7 @@
 
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The the Maritime Connectivity Platform (MCP) is a decentralised platform that
@@ -43,8 +43,22 @@ Maritime Connectivity Platform”.
 | global.mc_keycloak.mir_url | string | `"http://localhost/mcp/mir"` |  |
 | global.mc_keycloak.truststore | string | `""` |  |
 | global.mc_keycloak.truststore_password | string | `"changeit"` |  |
-| global.mc_mms_edge_router | string | `nil` |  |
-| global.mc_mms_router | string | `nil` |  |
+| global.mc_mms_edge_router.beacons | string | `""` |  |
+| global.mc_mms_edge_router.certificate | string | `""` |  |
+| global.mc_mms_edge_router.certificate_key | string | `""` |  |
+| global.mc_mms_edge_router.client_ca | string | `""` |  |
+| global.mc_mms_edge_router.client_certificate | string | `""` |  |
+| global.mc_mms_edge_router.client_certificate_key | string | `""` |  |
+| global.mc_mms_edge_router.mrn | string | `"urn:mrn:mcp:device:idp1:org1:er"` |  |
+| global.mc_mms_edge_router.port | int | `8080` |  |
+| global.mc_mms_edge_router.port_libp2p | int | `9000` |  |
+| global.mc_mms_edge_router.router_address | string | `"ws://localhost:8080"` |  |
+| global.mc_mms_router.certificate | string | `""` |  |
+| global.mc_mms_router.certificate_key | string | `""` |  |
+| global.mc_mms_router.client_ca | string | `""` |  |
+| global.mc_mms_router.port | int | `8080` |  |
+| global.mc_mms_router.port_libp2p | int | `9000` |  |
+| global.mc_mms_router.private_key | string | `""` |  |
 | global.mc_msr_ledger | string | `nil` |  |
 | global.mc_service_registry.db_host | string | `"localhost"` |  |
 | global.mc_service_registry.db_password | string | `"changeit"` |  |
@@ -86,14 +100,30 @@ Maritime Connectivity Platform”.
 | ingress.hosts[0].paths[2].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.hosts[0].paths[2].serviceName | string | `"mc-service-registry"` |  |
 | ingress.hosts[0].paths[2].servicePort | int | `8444` |  |
-| ingress.hosts[0].paths[3].path | string | `"/mcp/ledger()(.*)"` |  |
+| ingress.hosts[0].paths[3].path | string | `"/(mcp/mms)(.*)"` |  |
 | ingress.hosts[0].paths[3].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[3].serviceName | string | `"mc-msr-ledger"` |  |
-| ingress.hosts[0].paths[3].servicePort | int | `8545` |  |
-| ingress.hosts[0].paths[4].path | string | `"/mcp/portal()(.*)"` |  |
+| ingress.hosts[0].paths[3].serviceName | string | `"mc-mms-router"` |  |
+| ingress.hosts[0].paths[3].servicePort | int | `8080` |  |
+| ingress.hosts[0].paths[4].path | string | `"/(mcp/mms-p2p)(.*)"` |  |
 | ingress.hosts[0].paths[4].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[4].serviceName | string | `"mcp-management-portal"` |  |
-| ingress.hosts[0].paths[4].servicePort | int | `4200` |  |
+| ingress.hosts[0].paths[4].serviceName | string | `"mc-mms-router"` |  |
+| ingress.hosts[0].paths[4].servicePort | int | `9000` |  |
+| ingress.hosts[0].paths[5].path | string | `"/(mcp/mms-edge)(.*)"` |  |
+| ingress.hosts[0].paths[5].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts[0].paths[5].serviceName | string | `"mc-mms-edgerouter"` |  |
+| ingress.hosts[0].paths[5].servicePort | int | `8080` |  |
+| ingress.hosts[0].paths[6].path | string | `"/(mcp/mms-edge-p2p)(.*)"` |  |
+| ingress.hosts[0].paths[6].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts[0].paths[6].serviceName | string | `"mc-mms-edgerouter"` |  |
+| ingress.hosts[0].paths[6].servicePort | int | `9000` |  |
+| ingress.hosts[0].paths[7].path | string | `"/mcp/ledger()(.*)"` |  |
+| ingress.hosts[0].paths[7].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts[0].paths[7].serviceName | string | `"mc-msr-ledger"` |  |
+| ingress.hosts[0].paths[7].servicePort | int | `8545` |  |
+| ingress.hosts[0].paths[8].path | string | `"/mcp/portal()(.*)"` |  |
+| ingress.hosts[0].paths[8].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts[0].paths[8].serviceName | string | `"mcp-management-portal"` |  |
+| ingress.hosts[0].paths[8].servicePort | int | `4200` |  |
 | ingress.name | string | `"mcp-ingress"` |  |
 | ingress.tls | list | `[]` |  |
 
