@@ -120,6 +120,8 @@ env:
     configMapKeyRef:
       name: mc-mms-router-config
       key: port_libp2p
+- name: BEACONS
+  value: "/conf/beacons.txt"
 
 # livenessProbe:
 #   httpGet:
