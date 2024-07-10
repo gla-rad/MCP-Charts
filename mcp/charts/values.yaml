@@ -182,6 +182,7 @@ ingress:
   name: mcp-ingress
   className: nginx
   annotations:
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
     nginx.ingress.kubernetes.io/rewrite-target: /$1$2
     nginx.ingress.kubernetes.io/use-regex: "true"
   hosts:

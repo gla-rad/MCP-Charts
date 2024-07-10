@@ -107,8 +107,6 @@ resources: {}
   #   memory: 128Mi
 
 env:
-  - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
-    value: "true"
   - name: KC_HOSTNAME
     valueFrom:
       configMapKeyRef:
