@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP keycloak service
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 Although the MIR has its own database, for its user authentication it actually
@@ -22,7 +22,7 @@ The chart will spawn a keycloak service which will  involve three realms:
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env[0].name | string | `"KC_HOSTNAME_URL"` |  |
+| env[0].name | string | `"KC_HOSTNAME"` |  |
 | env[0].valueFrom.configMapKeyRef.key | string | `"keycloak_auth_url"` |  |
 | env[0].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
 | env[10].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PASSWORD"` |  |

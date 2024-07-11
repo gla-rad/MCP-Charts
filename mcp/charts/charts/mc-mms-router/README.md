@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MMS Router
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MMS system architecture defines the following components:
@@ -58,6 +58,8 @@ Protocol (MMTP). The MMTP facilitates the transfer of messages from MMS Agent
 | env[5].name | string | `"LIBP2P_PORT"` |  |
 | env[5].valueFrom.configMapKeyRef.key | string | `"port_libp2p"` |  |
 | env[5].valueFrom.configMapKeyRef.name | string | `"mc-mms-router-config"` |  |
+| env[6].name | string | `"BEACONS"` |  |
+| env[6].value | string | `"/conf/beacons.txt"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
