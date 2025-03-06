@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP Management Portal
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 Management Portal is an interface to manage resources registered in
@@ -81,7 +81,7 @@ You can experience a live demo from
 | global.mcp_management_portal.service_registry_url | string | `"https://mcp.grad-rrnav.pub/mcp/msr"` |  |
 | global.mcp_management_portal.title | string | `"MCP Testbed - Test Environment"` |  |
 | image.pullPolicy | string | `"Always"` |  |
-| image.repository | string | `"glarad/mcp-management-portal"` |  |
+| image.repository | string | `"glarad/mcp-management-portal-clr"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |

@@ -39,7 +39,7 @@ global:
 replicaCount: 1
 
 image:
-  repository: glarad/mcp-management-portal
+  repository: glarad/mcp-management-portal-clr
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
