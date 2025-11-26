@@ -2,7 +2,7 @@
 
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
-![Version: 0.0.13](https://img.shields.io/badge/Version-0.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.14](https://img.shields.io/badge/Version-0.0.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The the Maritime Connectivity Platform (MCP) is a decentralised platform that
@@ -57,7 +57,6 @@ Maritime Connectivity Platform”.
 | global.mc_mms_router.port | int | `8080` |  |
 | global.mc_mms_router.port_libp2p | int | `9000` |  |
 | global.mc_mms_router.private_key | string | `""` |  |
-| global.mc_msr_ledger | string | `nil` |  |
 | global.mc_service_registry.db_host | string | `"localhost"` |  |
 | global.mc_service_registry.db_password | string | `"changeit"` |  |
 | global.mc_service_registry.db_port | int | `5432` |  |
@@ -65,10 +64,6 @@ Maritime Connectivity Platform”.
 | global.mc_service_registry.db_username | string | `"admin"` |  |
 | global.mc_service_registry.keycloak_client_id | string | `"mcpsvreg"` |  |
 | global.mc_service_registry.keycloak_client_secret | string | `"changeit"` |  |
-| global.mc_service_registry.ledger_address | string | `"0x000000000000000000000000000000000000000"` |  |
-| global.mc_service_registry.ledger_credentials | string | `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` |  |
-| global.mc_service_registry.ledger_host | string | `"mc-msr-ledger.mcp"` |  |
-| global.mc_service_registry.ledger_port | int | `8546` |  |
 | global.mc_service_registry.mir_api_url | string | `"http://localhost/mcp/mir/oidc/api"` |  |
 | global.mcp_management_portal.identity_provider_mrn_namespace | string | `"mcp"` |  |
 | global.mcp_management_portal.identity_registry_email | string | `"test@email.org"` |  |
@@ -115,14 +110,10 @@ Maritime Connectivity Platform”.
 | ingress.hosts[0].paths[6].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.hosts[0].paths[6].serviceName | string | `"mc-mms-edgerouter"` |  |
 | ingress.hosts[0].paths[6].servicePort | int | `9000` |  |
-| ingress.hosts[0].paths[7].path | string | `"/mcp/ledger()(.*)"` |  |
+| ingress.hosts[0].paths[7].path | string | `"/mcp/portal()(.*)"` |  |
 | ingress.hosts[0].paths[7].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[7].serviceName | string | `"mc-msr-ledger"` |  |
-| ingress.hosts[0].paths[7].servicePort | int | `8545` |  |
-| ingress.hosts[0].paths[8].path | string | `"/mcp/portal()(.*)"` |  |
-| ingress.hosts[0].paths[8].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[8].serviceName | string | `"mcp-management-portal"` |  |
-| ingress.hosts[0].paths[8].servicePort | int | `4200` |  |
+| ingress.hosts[0].paths[7].serviceName | string | `"mcp-management-portal"` |  |
+| ingress.hosts[0].paths[7].servicePort | int | `4200` |  |
 | ingress.name | string | `"mcp-ingress"` |  |
 | ingress.tls | list | `[]` |  |
 | serviceAccount.annotations | object | `{}` |  |

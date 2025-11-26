@@ -68,8 +68,6 @@ global:
     db_username: "admin"
     db_password: "changeit"
     keycloak_client_secret: "changeit"
-    ledger_address: "0x000000000000000000000000000000000000000"
-    ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     #
     # Other Configuration
     #
@@ -78,22 +76,6 @@ global:
     db_port: 5432
     keycloak_client_id: "mcpsvreg"
     mir_api_url: "http://localhost/mcp/mir/oidc/api"
-    ledger_host: "mc-msr-ledger.mcp"
-    ledger_port: 8546
-  
-  # The MSR Ledger Chart
-  mc_msr_ledger:
-    #
-    # Input Files
-    #
-
-    #
-    # Credentials
-    #
-    
-    #
-    # Other Configuration
-    #
   
   # The MMS Router Chart
   mc_mms_router:
@@ -216,10 +198,6 @@ ingress:
           pathType: ImplementationSpecific
           serviceName: mc-mms-edgerouter
           servicePort: 9000
-        - path: /mcp/ledger()(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-msr-ledger
-          servicePort: 8545
         - path: /mcp/portal()(.*)
           pathType: ImplementationSpecific
           serviceName: mcp-management-portal

@@ -9,11 +9,11 @@ These Helm charts are also published and available throu the Helm
 the badge available on the top of this page.
 
 ## Description 
-This is a repository generated and currently maintened by the Research and
+This is a repository generated and currently maintained by the Research and
 Development Directorate (GRAD) of the General LIghthouse Authorities of the UK
 and Ireland (GLA). The main purpose is to provide an easy way to deploy the
 [Maritime Connectivity Platform (MCP)](https://maritimeconnectivity.net/)
-services into a Kubernetes environemnt using Helm charts.
+services into a Kubernetes environment using Helm charts.
 
 ## Workflows
 This project is based on github workflows to build and publish the charts
