@@ -25,6 +25,10 @@ go.work.sum
 config/**
 !config/.placeholder
 
+# Also add the AWS deployment configuration
+!config/aws
+!config/aws/**
+
 # Various tools
 helm-docs
 kubeconform

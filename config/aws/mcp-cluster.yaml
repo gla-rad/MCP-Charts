@@ -1,0 +1,44 @@
+# EKS cluster definition for the MCP platform.
+#
+#   eksctl create cluster -f config/aws/mcp-cluster.yaml
+#
+# The cluster and node IAM roles already exist in the account and are reused
+# here rather than being created by eksctl. Fill in the VPC and subnet ids from
+# the mcp-vpc stack outputs before running.
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mcp
+  region: eu-west-2
+  version: "1.36"
+
+iam:
+  # Cluster IAM role: needs AmazonEKSClusterPolicy and a trust relationship
+  # with eks.amazonaws.com.
+  serviceRoleARN: arn:aws:iam::322828184358:role/AmazonEKSMCPClusterRole
+
+vpc:
+  id: <vpc id>
+  subnets:
+    public:
+      eu-west-2a: { id: <public subnet 1 id> }
+      eu-west-2b: { id: <public subnet 2 id> }
+      eu-west-2c: { id: <public subnet 3 id> }
+    private:
+      eu-west-2a: { id: <private subnet 1 id> }
+      eu-west-2b: { id: <private subnet 2 id> }
+      eu-west-2c: { id: <private subnet 3 id> }
+
+managedNodeGroups:
+  - name: mcp-nodes
+    instanceType: t3.large
+    desiredCapacity: 3
+    # Keeps the workers in the private subnets, which is the point of the
+    # split subnet layout.
+    privateNetworking: true
+    iam:
+      # Node IAM role: needs AmazonEKSWorkerNodePolicy,
+      # AmazonEC2ContainerRegistryReadOnly and AmazonEKS_CNI_Policy, and a
+      # trust relationship with ec2.amazonaws.com.
+      instanceRoleARN: arn:aws:iam::322828184358:role/AmazonEKSMCPNodeRole
