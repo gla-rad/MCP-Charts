@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP keycloak service
 
-![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 Although the MIR has its own database, for its user authentication it actually
@@ -22,43 +22,47 @@ The chart will spawn a keycloak service which will  involve three realms:
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env[0].name | string | `"KC_HOSTNAME"` |  |
-| env[0].valueFrom.configMapKeyRef.key | string | `"keycloak_auth_url"` |  |
-| env[0].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
-| env[10].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PASSWORD"` |  |
-| env[10].valueFrom.secretKeyRef.key | string | `"keycloak_keystore_password"` |  |
-| env[10].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
-| env[11].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_TRUSTSTORE_PATH"` |  |
-| env[11].value | string | `"/mc-eventprovider-conf/truststore.jks"` |  |
-| env[12].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_TRUSTSTORE_PASSWORD"` |  |
-| env[12].valueFrom.secretKeyRef.key | string | `"keycloak_truststore_password"` |  |
+| env[0].name | string | `"KC_PROXY_HEADERS"` |  |
+| env[0].value | string | `"xforwarded"` |  |
+| env[10].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_SERVER_ROOT"` |  |
+| env[10].valueFrom.configMapKeyRef.key | string | `"mcp_identity_registry_url"` |  |
+| env[10].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
+| env[11].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PATH"` |  |
+| env[11].value | string | `"/mc-eventprovider-conf/idbroker-updater.jks"` |  |
+| env[12].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PASSWORD"` |  |
+| env[12].valueFrom.secretKeyRef.key | string | `"keycloak_keystore_password"` |  |
 | env[12].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
-| env[1].name | string | `"KC_HOSTNAME_ADMIN_URL"` |  |
-| env[1].valueFrom.configMapKeyRef.key | string | `"keycloak_admin_url"` |  |
-| env[1].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
-| env[2].name | string | `"KC_DB"` |  |
-| env[2].valueFrom.configMapKeyRef.key | string | `"keycloak_db_type"` |  |
+| env[13].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_TRUSTSTORE_PATH"` |  |
+| env[13].value | string | `"/mc-eventprovider-conf/truststore.jks"` |  |
+| env[14].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_TRUSTSTORE_PASSWORD"` |  |
+| env[14].valueFrom.secretKeyRef.key | string | `"keycloak_truststore_password"` |  |
+| env[14].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
+| env[1].name | string | `"KC_HTTP_ENABLED"` |  |
+| env[1].value | string | `"true"` |  |
+| env[2].name | string | `"KC_HOSTNAME"` |  |
+| env[2].valueFrom.configMapKeyRef.key | string | `"keycloak_auth_url"` |  |
 | env[2].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
-| env[3].name | string | `"KC_DB_URL"` |  |
-| env[3].valueFrom.configMapKeyRef.key | string | `"keycloak_db_url"` |  |
+| env[3].name | string | `"KC_HOSTNAME_ADMIN_URL"` |  |
+| env[3].valueFrom.configMapKeyRef.key | string | `"keycloak_admin_url"` |  |
 | env[3].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
-| env[4].name | string | `"KC_DB_USERNAME"` |  |
-| env[4].valueFrom.secretKeyRef.key | string | `"keycloak_db_username"` |  |
-| env[4].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
-| env[5].name | string | `"KC_DB_PASSWORD"` |  |
-| env[5].valueFrom.secretKeyRef.key | string | `"keycloak_db_password"` |  |
-| env[5].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
-| env[6].name | string | `"KEYCLOAK_ADMIN"` |  |
-| env[6].valueFrom.secretKeyRef.key | string | `"keycloak_admin"` |  |
+| env[4].name | string | `"KC_DB"` |  |
+| env[4].valueFrom.configMapKeyRef.key | string | `"keycloak_db_type"` |  |
+| env[4].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
+| env[5].name | string | `"KC_DB_URL"` |  |
+| env[5].valueFrom.configMapKeyRef.key | string | `"keycloak_db_url"` |  |
+| env[5].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
+| env[6].name | string | `"KC_DB_USERNAME"` |  |
+| env[6].valueFrom.secretKeyRef.key | string | `"keycloak_db_username"` |  |
 | env[6].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
-| env[7].name | string | `"KEYCLOAK_ADMIN_PASSWORD"` |  |
-| env[7].valueFrom.secretKeyRef.key | string | `"keycloak_admin_password"` |  |
+| env[7].name | string | `"KC_DB_PASSWORD"` |  |
+| env[7].valueFrom.secretKeyRef.key | string | `"keycloak_db_password"` |  |
 | env[7].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
-| env[8].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_SERVER_ROOT"` |  |
-| env[8].valueFrom.configMapKeyRef.key | string | `"mcp_identity_registry_url"` |  |
-| env[8].valueFrom.configMapKeyRef.name | string | `"mc-keycloak-config"` |  |
-| env[9].name | string | `"KC_SPI_EVENTS_LISTENER_MCP_EVENT_LISTENER_KEYSTORE_PATH"` |  |
-| env[9].value | string | `"/mc-eventprovider-conf/idbroker-updater.jks"` |  |
+| env[8].name | string | `"KEYCLOAK_ADMIN"` |  |
+| env[8].valueFrom.secretKeyRef.key | string | `"keycloak_admin"` |  |
+| env[8].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
+| env[9].name | string | `"KEYCLOAK_ADMIN_PASSWORD"` |  |
+| env[9].valueFrom.secretKeyRef.key | string | `"keycloak_admin_password"` |  |
+| env[9].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |

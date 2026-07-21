@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MIR service
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MIR is responsible for identity management and providing security
@@ -33,6 +33,18 @@ instance providers need to follow to adhere to them.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| env[0].name | string | `"SPRING_DATASOURCE_URL"` |  |
+| env[0].valueFrom.configMapKeyRef.key | string | `"mir_database_url"` |  |
+| env[0].valueFrom.configMapKeyRef.name | string | `"mc-identity-registry-config"` |  |
+| env[0].valueFrom.configMapKeyRef.optional | bool | `true` |  |
+| env[1].name | string | `"SPRING_DATASOURCE_USERNAME"` |  |
+| env[1].valueFrom.secretKeyRef.key | string | `"mir_database_username"` |  |
+| env[1].valueFrom.secretKeyRef.name | string | `"mc-identity-registry-secrets"` |  |
+| env[1].valueFrom.secretKeyRef.optional | bool | `true` |  |
+| env[2].name | string | `"SPRING_DATASOURCE_PASSWORD"` |  |
+| env[2].valueFrom.secretKeyRef.key | string | `"mir_database_password"` |  |
+| env[2].valueFrom.secretKeyRef.name | string | `"mc-identity-registry-secrets"` |  |
+| env[2].valueFrom.secretKeyRef.optional | bool | `true` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
