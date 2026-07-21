@@ -8,6 +8,7 @@ data:
   msr_database_type: {{ .Values.global.mc_service_registry.db_type | quote }}
   msr_database_host: {{ .Values.global.mc_service_registry.db_host | quote }}
   msr_database_port: {{ .Values.global.mc_service_registry.db_port | quote }}
+  msr_database_name: {{ .Values.global.mc_service_registry.db_name | quote }}
   msr_keycloak_client_id: {{ .Values.global.mc_service_registry.keycloak_client_id | quote }}
   mcp_identity_registry_api_url: {{ .Values.global.mc_service_registry.mir_api_url | quote }}
   msr_ledger_host: {{ .Values.global.mc_service_registry.ledger_host | quote }}

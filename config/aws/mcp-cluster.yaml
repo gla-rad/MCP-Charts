@@ -1,15 +1,28 @@
 # EKS cluster definition for the MCP platform.
 #
-#   eksctl create cluster -f config/aws/mcp-cluster.yaml
+# This file is a template rather than a ready to run config: the ids belong to
+# a particular deployment, so they are substituted at call time instead of
+# being committed. eksctl rejects every command line flag when -f is set
+# ("cannot use --name when --config-file/-f is set"), but it will read the
+# config from stdin, so the values are injected with envsubst:
+#
+#   envsubst < config/aws/mcp-cluster.yaml | eksctl create cluster -f -
+#
+# See "Create the EKS cluster" in README.md for the block that fills the
+# variables straight from the mcp-vpc stack outputs.
 #
 # The cluster and node IAM roles already exist in the account and are reused
-# here rather than being created by eksctl. Fill in the VPC and subnet ids from
-# the mcp-vpc stack outputs before running.
+# here rather than being created by eksctl.
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: mcp
+  # CLUSTER_NAME must match the ClusterName parameter used for the mcp-vpc
+  # stack, since that is what builds the kubernetes.io/cluster/<name> subnet
+  # tags. When the two disagree, the cluster comes up fine but load balancer
+  # provisioning fails with "could not find any suitable subnets for creating
+  # the ELB" - the cloud controller skips subnets tagged for another cluster.
+  name: ${CLUSTER_NAME}
   region: eu-west-2
   version: "1.36"
 
@@ -19,16 +32,16 @@ iam:
   serviceRoleARN: arn:aws:iam::322828184358:role/AmazonEKSMCPClusterRole
 
 vpc:
-  id: <vpc id>
+  id: ${VPC_ID}
   subnets:
     public:
-      eu-west-2a: { id: <public subnet 1 id> }
-      eu-west-2b: { id: <public subnet 2 id> }
-      eu-west-2c: { id: <public subnet 3 id> }
+      eu-west-2a: { id: ${PUBLIC_SUBNET_1} }
+      eu-west-2b: { id: ${PUBLIC_SUBNET_2} }
+      eu-west-2c: { id: ${PUBLIC_SUBNET_3} }
     private:
-      eu-west-2a: { id: <private subnet 1 id> }
-      eu-west-2b: { id: <private subnet 2 id> }
-      eu-west-2c: { id: <private subnet 3 id> }
+      eu-west-2a: { id: ${PRIVATE_SUBNET_1} }
+      eu-west-2b: { id: ${PRIVATE_SUBNET_2} }
+      eu-west-2c: { id: ${PRIVATE_SUBNET_3} }
 
 managedNodeGroups:
   - name: mcp-nodes

@@ -107,6 +107,16 @@ resources: {}
   #   memory: 128Mi
 
 env:
+  # TLS is terminated by the ingress controller, not by Keycloak, so Keycloak
+  # has to be told to trust the proxy's forwarded headers. Without this it
+  # reads the scheme off the plain HTTP connection from the ingress and issues
+  # http:// redirects and token issuers, which then fail validation against the
+  # https issuer-uri the registries are configured with.
+  # nginx sets X-Forwarded-*, hence xforwarded rather than forwarded.
+  - name: KC_PROXY_HEADERS
+    value: "xforwarded"
+  - name: KC_HTTP_ENABLED
+    value: "true"
   - name: KC_HOSTNAME
     valueFrom:
       configMapKeyRef:

@@ -27,6 +27,9 @@ Maritime Connectivity Platform”.
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
 | global.mc_identity_registry.configuration | string | `""` |  |
+| global.mc_identity_registry.db_password | string | `""` |  |
+| global.mc_identity_registry.db_url | string | `""` |  |
+| global.mc_identity_registry.db_username | string | `""` |  |
 | global.mc_identity_registry.keycloak_json | string | `""` |  |
 | global.mc_identity_registry.keystore | string | `""` |  |
 | global.mc_identity_registry.truststore | string | `""` |  |
@@ -58,6 +61,7 @@ Maritime Connectivity Platform”.
 | global.mc_mms_router.port_libp2p | int | `9000` |  |
 | global.mc_mms_router.private_key | string | `""` |  |
 | global.mc_service_registry.db_host | string | `"localhost"` |  |
+| global.mc_service_registry.db_name | string | `"mcp_service_registry"` |  |
 | global.mc_service_registry.db_password | string | `"changeit"` |  |
 | global.mc_service_registry.db_port | int | `5432` |  |
 | global.mc_service_registry.db_type | string | `"postgresql"` |  |

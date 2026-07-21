@@ -1,0 +1,214 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "MCP RDS - a single PostgreSQL instance in the private subnets of the mcp-vpc stack, hosting the Keycloak, Identity Registry and Service Registry databases. Deploy after mcp-vpc and before the EKS cluster.",
+
+  "Parameters": {
+    "VpcStackName": {
+      "Type": "String",
+      "Default": "mcp-vpc",
+      "Description": "Name of the mcp-vpc stack whose VpcId and PrivateSubnetIds outputs are imported."
+    },
+    "DbAccessCidr": {
+      "Type": "String",
+      "Default": "10.1.0.0/16",
+      "Description": "CIDR allowed to reach port 5432. Defaults to the VpcCidr of the mcp-vpc stack, which restricts access to the VPC itself. Narrow this to the private subnet CIDRs if you want the public subnets excluded."
+    },
+    "DbInstanceClass": {
+      "Type": "String",
+      "Default": "db.t4g.medium",
+      "Description": "Instance class. db.t4g.medium (2 vCPU / 4 GiB) comfortably carries all three schemas; db.t4g.small is enough for a test environment."
+    },
+    "EngineVersion": {
+      "Type": "String",
+      "Default": "16",
+      "Description": "PostgreSQL major version. A bare major version tracks the latest supported minor release."
+    },
+    "AllocatedStorage": {
+      "Type": "Number",
+      "Default": 50,
+      "MinValue": 20,
+      "Description": "Initial storage in GiB."
+    },
+    "MaxAllocatedStorage": {
+      "Type": "Number",
+      "Default": 200,
+      "Description": "Upper bound for RDS storage autoscaling. Must exceed AllocatedStorage."
+    },
+    "MasterUsername": {
+      "Type": "String",
+      "Default": "mcpadmin",
+      "Description": "Master user. This is the account used to create the three per-service databases and roles; the services themselves do not use it."
+    },
+    "MultiAz": {
+      "Type": "String",
+      "Default": "false",
+      "AllowedValues": ["true", "false"],
+      "Description": "Multi-AZ standby. Roughly doubles the instance cost. Note that the VPC only has one NAT gateway, so this alone does not make the platform AZ tolerant."
+    },
+    "BackupRetentionPeriod": {
+      "Type": "Number",
+      "Default": 7,
+      "MinValue": 0,
+      "MaxValue": 35,
+      "Description": "Automated backup retention in days. 0 disables backups."
+    },
+    "DeletionProtection": {
+      "Type": "String",
+      "Default": "true",
+      "AllowedValues": ["true", "false"],
+      "Description": "Blocks deletion of the instance until switched off. Leave on outside of throwaway environments."
+    }
+  },
+
+  "Resources": {
+
+    "DbSecret": {
+      "Type": "AWS::SecretsManager::Secret",
+      "Properties": {
+        "Description": "Master credentials for the MCP PostgreSQL instance. The name is left to CloudFormation on purpose - a fixed name blocks redeployment for the length of the recovery window, because deleting the stack only schedules the secret for deletion rather than removing it. Find it through the DbSecretArn output.",
+        "GenerateSecretString": {
+          "SecretStringTemplate": { "Fn::Sub": "{\"username\": \"${MasterUsername}\"}" },
+          "GenerateStringKey": "password",
+          "PasswordLength": 32,
+          "ExcludePunctuation": true
+        },
+        "Tags": [{ "Key": "Name", "Value": { "Fn::Sub": "${AWS::StackName}-master" } }]
+      }
+    },
+
+    "DbSecretAttachment": {
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+      "Properties": {
+        "SecretId": { "Ref": "DbSecret" },
+        "TargetId": { "Ref": "DbInstance" },
+        "TargetType": "AWS::RDS::DBInstance"
+      }
+    },
+
+    "DbSubnetGroup": {
+      "Type": "AWS::RDS::DBSubnetGroup",
+      "Properties": {
+        "DBSubnetGroupDescription": "MCP private subnets",
+        "SubnetIds": {
+          "Fn::Split": [",", { "Fn::ImportValue": { "Fn::Sub": "${VpcStackName}-PrivateSubnetIds" } }]
+        },
+        "Tags": [{ "Key": "Name", "Value": { "Fn::Sub": "${AWS::StackName}-subnet-group" } }]
+      }
+    },
+
+    "DbSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "PostgreSQL access for the MCP EKS workloads",
+        "VpcId": { "Fn::ImportValue": { "Fn::Sub": "${VpcStackName}-VpcId" } },
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 5432,
+            "ToPort": 5432,
+            "CidrIp": { "Ref": "DbAccessCidr" },
+            "Description": "PostgreSQL from inside the VPC"
+          }
+        ],
+        "Tags": [{ "Key": "Name", "Value": { "Fn::Sub": "${AWS::StackName}-sg" } }]
+      }
+    },
+
+    "DbInstance": {
+      "Type": "AWS::RDS::DBInstance",
+      "DeletionPolicy": "Snapshot",
+      "UpdateReplacePolicy": "Snapshot",
+      "Properties": {
+        "DBInstanceIdentifier": { "Ref": "AWS::StackName" },
+        "Engine": "postgres",
+        "EngineVersion": { "Ref": "EngineVersion" },
+        "DBInstanceClass": { "Ref": "DbInstanceClass" },
+        "AllocatedStorage": { "Ref": "AllocatedStorage" },
+        "MaxAllocatedStorage": { "Ref": "MaxAllocatedStorage" },
+        "StorageType": "gp3",
+        "StorageEncrypted": true,
+
+        "DBName": "keycloak_mcp",
+        "MasterUsername": { "Ref": "MasterUsername" },
+        "MasterUserPassword": {
+          "Fn::Sub": "{{resolve:secretsmanager:${DbSecret}:SecretString:password}}"
+        },
+        "Port": "5432",
+
+        "DBSubnetGroupName": { "Ref": "DbSubnetGroup" },
+        "VPCSecurityGroups": [{ "Ref": "DbSecurityGroup" }],
+        "PubliclyAccessible": false,
+        "MultiAZ": { "Ref": "MultiAz" },
+
+        "BackupRetentionPeriod": { "Ref": "BackupRetentionPeriod" },
+        "PreferredBackupWindow": "02:00-03:00",
+        "PreferredMaintenanceWindow": "sun:03:30-sun:04:30",
+        "CopyTagsToSnapshot": true,
+        "AutoMinorVersionUpgrade": true,
+        "DeletionProtection": { "Ref": "DeletionProtection" },
+        "EnableCloudwatchLogsExports": ["postgresql", "upgrade"],
+
+        "Tags": [{ "Key": "Name", "Value": { "Fn::Sub": "${AWS::StackName}" } }]
+      }
+    }
+  },
+
+  "Outputs": {
+    "DbEndpoint": {
+      "Description": "Instance hostname. This is the value for mc_service_registry.db_host and the host part of the two JDBC URLs.",
+      "Value": { "Fn::GetAtt": ["DbInstance", "Endpoint.Address"] },
+      "Export": { "Name": { "Fn::Sub": "${AWS::StackName}-Endpoint" } }
+    },
+    "DbPort": {
+      "Description": "Instance port",
+      "Value": { "Fn::GetAtt": ["DbInstance", "Endpoint.Port"] },
+      "Export": { "Name": { "Fn::Sub": "${AWS::StackName}-Port" } }
+    },
+    "DbSecretArn": {
+      "Description": "Secrets Manager secret holding the master username and password",
+      "Value": { "Ref": "DbSecret" },
+      "Export": { "Name": { "Fn::Sub": "${AWS::StackName}-SecretArn" } }
+    },
+    "DbSecurityGroupId": {
+      "Description": "Security group in front of the instance",
+      "Value": { "Ref": "DbSecurityGroup" },
+      "Export": { "Name": { "Fn::Sub": "${AWS::StackName}-SecurityGroupId" } }
+    },
+    "KeycloakJdbcUrl": {
+      "Description": "Ready made value for global.mc_keycloak.db_url",
+      "Value": {
+        "Fn::Sub": [
+          "jdbc:postgresql://${Host}:${Port}/keycloak_mcp",
+          {
+            "Host": { "Fn::GetAtt": ["DbInstance", "Endpoint.Address"] },
+            "Port": { "Fn::GetAtt": ["DbInstance", "Endpoint.Port"] }
+          }
+        ]
+      }
+    },
+    "IdentityRegistryJdbcUrl": {
+      "Description": "Ready made value for global.mc_identity_registry.db_url",
+      "Value": {
+        "Fn::Sub": [
+          "jdbc:postgresql://${Host}:${Port}/mcp_identity_registry",
+          {
+            "Host": { "Fn::GetAtt": ["DbInstance", "Endpoint.Address"] },
+            "Port": { "Fn::GetAtt": ["DbInstance", "Endpoint.Port"] }
+          }
+        ]
+      }
+    },
+    "ServiceRegistryJdbcUrl": {
+      "Description": "Ready made value for global.mc_service_registry.db_url",
+      "Value": {
+        "Fn::Sub": [
+          "jdbc:postgresql://${Host}:${Port}/mcp_service_registry",
+          {
+            "Host": { "Fn::GetAtt": ["DbInstance", "Endpoint.Address"] },
+            "Port": { "Fn::GetAtt": ["DbInstance", "Endpoint.Port"] }
+          }
+        ]
+      }
+    }
+  }
+}

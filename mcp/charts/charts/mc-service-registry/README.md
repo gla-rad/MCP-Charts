@@ -78,6 +78,7 @@ register/publish a service instance.
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
 | global.mc_service_registry.db_host | string | `"localhost"` |  |
+| global.mc_service_registry.db_name | string | `"mcp_service_registry"` |  |
 | global.mc_service_registry.db_password | string | `"changeit"` |  |
 | global.mc_service_registry.db_port | int | `5432` |  |
 | global.mc_service_registry.db_type | string | `"postgresql"` |  |

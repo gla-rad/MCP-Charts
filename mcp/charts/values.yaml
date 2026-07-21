@@ -51,11 +51,13 @@ global:
     #
     # Credentials
     #
-    
+    db_username: ""
+    db_password: ""
     #
     # Other Configuration
     #
-  
+    db_url: ""
+
   # The Service Registry Chart
   mc_service_registry:
     #
@@ -74,6 +76,7 @@ global:
     db_type: "postgresql"
     db_host: "localhost"
     db_port: 5432
+    db_name: "mcp_service_registry"
     keycloak_client_id: "mcpsvreg"
     mir_api_url: "http://localhost/mcp/mir/oidc/api"
   

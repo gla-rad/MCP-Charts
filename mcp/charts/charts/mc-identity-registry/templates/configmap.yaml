@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mc-identity-registry-config
+data:
+  keycloak_url: {{ .Values.global.keycloak_url | quote }}
+  keycloak_realm: {{ .Values.global.keycloak_realm | quote }}
+  mir_database_url: {{ .Values.global.mc_identity_registry.db_url | quote }}
+

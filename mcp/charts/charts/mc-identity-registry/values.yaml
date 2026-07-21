@@ -21,10 +21,15 @@ global:
     #
     # Credentials
     #
-    
+    # Leave empty to keep whatever spring.datasource holds in the mounted
+    # application.yaml. Anything set here is exported as a SPRING_DATASOURCE_*
+    # environment variable, which takes precedence over the file.
+    db_username: ""
+    db_password: ""
     #
     # Other Configuration
     #
+    db_url: ""
 
 replicaCount: 1
 
@@ -114,6 +119,29 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+# The datasource entries are marked optional, so when the corresponding values
+# are left empty the keys are never written and the container falls back to the
+# spring.datasource block of the mounted application.yaml.
+env:
+- name: SPRING_DATASOURCE_URL
+  valueFrom:
+    configMapKeyRef:
+      name: mc-identity-registry-config
+      key: mir_database_url
+      optional: true
+- name: SPRING_DATASOURCE_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: mc-identity-registry-secrets
+      key: mir_database_username
+      optional: true
+- name: SPRING_DATASOURCE_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: mc-identity-registry-secrets
+      key: mir_database_password
+      optional: true
 
 # Additional volumes on the output Deployment definition.
 volumes:

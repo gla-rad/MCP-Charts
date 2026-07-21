@@ -30,6 +30,7 @@ global:
     db_type: "postgresql"
     db_host: "localhost"
     db_port: 5432
+    db_name: "mcp_service_registry"
     keycloak_client_id: "mcpsvreg"
     ledger_host: "mc-msr-ledger.mcp"
     ledger_port: 8546
@@ -123,6 +124,11 @@ env:
     configMapKeyRef:
       name: mc-service-registry-config
       key: msr_database_port
+- name: DATABASE_NAME
+  valueFrom:
+    configMapKeyRef:
+      name: mc-service-registry-config
+      key: msr_database_name
 - name: DATABASE_USERNAME
   valueFrom:
     secretKeyRef:

@@ -37,6 +37,9 @@ instance providers need to follow to adhere to them.
 | global.keycloak_realm | string | `"MCP"` |  |
 | global.keycloak_url | string | `"http://localhost/mcp"` |  |
 | global.mc_identity_registry.configuration | string | `""` |  |
+| global.mc_identity_registry.db_password | string | `""` |  |
+| global.mc_identity_registry.db_url | string | `""` |  |
+| global.mc_identity_registry.db_username | string | `""` |  |
 | global.mc_identity_registry.keycloak_json | string | `""` |  |
 | global.mc_identity_registry.keystore | string | `""` |  |
 | global.mc_identity_registry.truststore | string | `""` |  |

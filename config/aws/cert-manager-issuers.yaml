@@ -1,0 +1,49 @@
+# Let's Encrypt ACME issuers for the MCP ingress.
+#
+#   kubectl apply -f config/aws/cert-manager-issuers.yaml
+#
+# No account registration is needed beforehand: cert-manager generates an ACME
+# account key, registers it on first use and stores it in the secret named by
+# privateKeySecretRef, in the cert-manager namespace.
+#
+# Both issuers are defined so that switching between them is a one word change
+# to the cert-manager.io/cluster-issuer annotation in config/values.yaml.
+#
+# Start on staging. Production allows only 5 failed validations per hour, which
+# is easy to exhaust on a DNS or ingress path problem. Staging certificates
+# chain to an untrusted root, so expect browser warnings and expect the Java
+# services to reject the chain until you move to production - that is normal
+# and not a misconfiguration.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: Nikolaos.Vastardis@gla-rad.org
+    privateKeySecretRef:
+      name: letsencrypt-staging-account-key
+    solvers:
+      # HTTP-01 needs mcp.gla-rad.org to resolve to the ingress load balancer
+      # before a certificate can be issued. cert-manager creates its own
+      # short-lived Ingress for the challenge, so the regex rewrite rules on
+      # the MCP ingress do not interfere.
+      - http01:
+          ingress:
+            ingressClassName: nginx
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: Nikolaos.Vastardis@gla-rad.org
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: nginx
