@@ -193,6 +193,14 @@ Each service owns its own database and cannot touch the others. All three
 applications run their own schema migrations on first start — Keycloak
 natively, and both registries through Flyway — so no schema needs loading.
 
+Note that you also need to create the `postgis` extension inside the MSR
+database as such:
+
+```sql
+\c mcp_service_registry
+CREATE EXTENSION IF NOT EXISTS postgis;
+```
+
 ### Point the charts at it
 
 Four values in `config/values.yaml` change, using the stack outputs. The

@@ -2,7 +2,7 @@
 
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
-![Version: 0.0.16](https://img.shields.io/badge/Version-0.0.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.17](https://img.shields.io/badge/Version-0.0.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The the Maritime Connectivity Platform (MCP) is a decentralised platform that
@@ -80,44 +80,45 @@ Maritime Connectivity Platform”.
 | global.mcp_management_portal.service_registry_provider | string | `"Maritime Connectivity Platform"` |  |
 | global.mcp_management_portal.service_registry_url | string | `"https://mcp.grad-rrnav.pub/mcp/msr"` |  |
 | global.mcp_management_portal.title | string | `"MCP Testbed - Test Environment"` |  |
+| ingress.annotations."cert-manager.io/cluster-issuer" | string | `"letsencrypt-staging"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-buffer-size" | string | `"16k"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$1$2"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
-| ingress.hosts[0].host | string | `"localhost"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/mcp/(auth)(.*)"` |  |
+| ingress.hosts[0].host | string | `"mcp.gla-rad.org"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/portal()(.*)"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[0].serviceName | string | `"mc-keycloak"` |  |
-| ingress.hosts[0].paths[0].servicePort | int | `8090` |  |
-| ingress.hosts[0].paths[1].path | string | `"/(mcp/mir)(.*)"` |  |
+| ingress.hosts[0].paths[0].serviceName | string | `"mcp-management-portal"` |  |
+| ingress.hosts[0].paths[0].servicePort | int | `4200` |  |
+| ingress.hosts[0].paths[1].path | string | `"/(auth)(.*)"` |  |
 | ingress.hosts[0].paths[1].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[1].serviceName | string | `"mc-identity-registry"` |  |
-| ingress.hosts[0].paths[1].servicePort | int | `8443` |  |
-| ingress.hosts[0].paths[2].path | string | `"/(mcp/msr)(.*)"` |  |
+| ingress.hosts[0].paths[1].serviceName | string | `"mc-keycloak"` |  |
+| ingress.hosts[0].paths[1].servicePort | int | `8090` |  |
+| ingress.hosts[0].paths[2].path | string | `"/(mir)(.*)"` |  |
 | ingress.hosts[0].paths[2].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[2].serviceName | string | `"mc-service-registry"` |  |
-| ingress.hosts[0].paths[2].servicePort | int | `8444` |  |
-| ingress.hosts[0].paths[3].path | string | `"/(mcp/mms)(.*)"` |  |
+| ingress.hosts[0].paths[2].serviceName | string | `"mc-identity-registry"` |  |
+| ingress.hosts[0].paths[2].servicePort | int | `8443` |  |
+| ingress.hosts[0].paths[3].path | string | `"/(msr)(.*)"` |  |
 | ingress.hosts[0].paths[3].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[3].serviceName | string | `"mc-mms-router"` |  |
-| ingress.hosts[0].paths[3].servicePort | int | `8080` |  |
-| ingress.hosts[0].paths[4].path | string | `"/(mcp/mms-p2p)(.*)"` |  |
+| ingress.hosts[0].paths[3].serviceName | string | `"mc-service-registry"` |  |
+| ingress.hosts[0].paths[3].servicePort | int | `8444` |  |
+| ingress.hosts[0].paths[4].path | string | `"/(mms)(.*)"` |  |
 | ingress.hosts[0].paths[4].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[4].serviceName | string | `"mc-mms-router"` |  |
-| ingress.hosts[0].paths[4].servicePort | int | `9000` |  |
-| ingress.hosts[0].paths[5].path | string | `"/(mcp/mms-edge)(.*)"` |  |
+| ingress.hosts[0].paths[4].serviceName | string | `"mc-mms-edge-router"` |  |
+| ingress.hosts[0].paths[4].servicePort | int | `8080` |  |
+| ingress.hosts[0].paths[5].path | string | `"/(mms-p2p)(.*)"` |  |
 | ingress.hosts[0].paths[5].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[5].serviceName | string | `"mc-mms-edgerouter"` |  |
-| ingress.hosts[0].paths[5].servicePort | int | `8080` |  |
-| ingress.hosts[0].paths[6].path | string | `"/(mcp/mms-edge-p2p)(.*)"` |  |
+| ingress.hosts[0].paths[5].serviceName | string | `"mc-mms-router"` |  |
+| ingress.hosts[0].paths[5].servicePort | int | `9000` |  |
+| ingress.hosts[0].paths[6].path | string | `"/(mms-edge)(.*)"` |  |
 | ingress.hosts[0].paths[6].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.hosts[0].paths[6].serviceName | string | `"mc-mms-edgerouter"` |  |
-| ingress.hosts[0].paths[6].servicePort | int | `9000` |  |
-| ingress.hosts[0].paths[7].path | string | `"/mcp/portal()(.*)"` |  |
+| ingress.hosts[0].paths[6].servicePort | int | `8080` |  |
+| ingress.hosts[0].paths[7].path | string | `"/(mms-edge-p2p)(.*)"` |  |
 | ingress.hosts[0].paths[7].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.hosts[0].paths[7].serviceName | string | `"mcp-management-portal"` |  |
-| ingress.hosts[0].paths[7].servicePort | int | `4200` |  |
+| ingress.hosts[0].paths[7].serviceName | string | `"mc-mms-edgerouter"` |  |
+| ingress.hosts[0].paths[7].servicePort | int | `9000` |  |
 | ingress.name | string | `"mcp-ingress"` |  |
 | ingress.tls | list | `[]` |  |
 | serviceAccount.annotations | object | `{}` |  |

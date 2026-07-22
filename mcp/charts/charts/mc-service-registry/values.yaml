@@ -7,7 +7,7 @@ global:
   #
   # Common Variables
   #
-  keycloak_url: "http://localhost/mcp"
+  keycloak_url: "http://localhost"
   keycloak_realm: "MCP"
 
   # The Service Registry Chart
@@ -185,15 +185,15 @@ env:
       name: mc-service-registry-secrets
       key: msr_ledger_credentials
 - name: CONTEXT_PATH
-  value: /mcp/msr
+  value: /msr
 
 livenessProbe:
   httpGet:
-    path: /mcp/msr/actuator/health/liveness
+    path: /msr/actuator/health/liveness
     port: http
 readinessProbe:
   httpGet:
-    path: /mcp/msr/actuator/health/readiness
+    path: /msr/actuator/health/readiness
     port: http
 
 autoscaling:

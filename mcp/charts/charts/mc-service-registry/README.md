@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MSR service
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MSR does not provide actual maritime information but a specification of
@@ -49,7 +49,7 @@ register/publish a service instance.
 | env[14].valueFrom.secretKeyRef.key | string | `"msr_ledger_credentials"` |  |
 | env[14].valueFrom.secretKeyRef.name | string | `"mc-service-registry-secrets"` |  |
 | env[15].name | string | `"CONTEXT_PATH"` |  |
-| env[15].value | string | `"/mcp/msr"` |  |
+| env[15].value | string | `"/msr"` |  |
 | env[1].name | string | `"DATABASE_SERVER_HOST"` |  |
 | env[1].valueFrom.configMapKeyRef.key | string | `"msr_database_host"` |  |
 | env[1].valueFrom.configMapKeyRef.name | string | `"mc-service-registry-config"` |  |
@@ -79,7 +79,7 @@ register/publish a service instance.
 | env[9].valueFrom.secretKeyRef.name | string | `"mc-service-registry-secrets"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
-| global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.keycloak_url | string | `"http://localhost"` |  |
 | global.mc_service_registry.db_host | string | `"localhost"` |  |
 | global.mc_service_registry.db_name | string | `"mcp_service_registry"` |  |
 | global.mc_service_registry.db_password | string | `"changeit"` |  |
@@ -103,14 +103,14 @@ register/publish a service instance.
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| livenessProbe.httpGet.path | string | `"/mcp/msr/actuator/health/liveness"` |  |
+| livenessProbe.httpGet.path | string | `"/msr/actuator/health/liveness"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector."kubernetes.io/os" | string | `"linux"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe.httpGet.path | string | `"/mcp/msr/actuator/health/readiness"` |  |
+| readinessProbe.httpGet.path | string | `"/msr/actuator/health/readiness"` |  |
 | readinessProbe.httpGet.port | string | `"http"` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |

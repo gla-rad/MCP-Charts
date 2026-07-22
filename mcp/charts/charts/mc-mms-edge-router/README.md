@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MMS Edge Router
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MMS system architecture defines the following components:
@@ -68,7 +68,7 @@ one MMS Router to another.
 | env[7].valueFrom.configMapKeyRef.name | string | `"mc-mms-edge-router-config"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
-| global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.keycloak_url | string | `"http://localhost"` |  |
 | global.mc_mms_edge_router.certificate | string | `""` |  |
 | global.mc_mms_edge_router.certificate_key | string | `""` |  |
 | global.mc_mms_edge_router.client_ca | string | `""` |  |

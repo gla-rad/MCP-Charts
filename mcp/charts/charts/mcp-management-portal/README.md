@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP Management Portal
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 Management Portal is an interface to manage resources registered in
@@ -38,7 +38,7 @@ You can experience a live demo from
 | env[11].valueFrom.configMapKeyRef.key | string | `"mcp_portal_management_portal_email"` |  |
 | env[11].valueFrom.configMapKeyRef.name | string | `"mcp-management-portal-config"` |  |
 | env[12].name | string | `"APP_BASE_HREF"` |  |
-| env[12].value | string | `"/mcp/portal/"` |  |
+| env[12].value | string | `"/portal/"` |  |
 | env[1].name | string | `"MANAGEMENT_PORTAL_NAME"` |  |
 | env[1].valueFrom.configMapKeyRef.key | string | `"mcp_portal_name"` |  |
 | env[1].valueFrom.configMapKeyRef.name | string | `"mcp-management-portal-config"` |  |
@@ -68,17 +68,17 @@ You can experience a live demo from
 | env[9].valueFrom.configMapKeyRef.name | string | `"mcp-management-portal-config"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
-| global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.keycloak_url | string | `"http://localhost"` |  |
 | global.mcp_management_portal.identity_provider_mrn_namespace | string | `"mcp"` |  |
 | global.mcp_management_portal.identity_registry_email | string | `"test@email.org"` |  |
 | global.mcp_management_portal.identity_registry_provider | string | `"Maritime Connectivity Platform"` |  |
-| global.mcp_management_portal.identity_registry_url | string | `"https://localhost/mcp/mir"` |  |
+| global.mcp_management_portal.identity_registry_url | string | `"https://localhost/mir"` |  |
 | global.mcp_management_portal.management_portal_email | string | `"test@email.org"` |  |
 | global.mcp_management_portal.management_portal_provider | string | `"Maritime Connectivity Platform"` |  |
 | global.mcp_management_portal.name | string | `"MCP Testbed"` |  |
 | global.mcp_management_portal.service_registry_email | string | `"test@email.org"` |  |
 | global.mcp_management_portal.service_registry_provider | string | `"Maritime Connectivity Platform"` |  |
-| global.mcp_management_portal.service_registry_url | string | `"https://mcp.grad-rrnav.pub/mcp/msr"` |  |
+| global.mcp_management_portal.service_registry_url | string | `"https://mcp.grad-rrnav.pub/msr"` |  |
 | global.mcp_management_portal.title | string | `"MCP Testbed - Test Environment"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"glarad/mcp-management-portal-clr"` |  |

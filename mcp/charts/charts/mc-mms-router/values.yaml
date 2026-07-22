@@ -7,7 +7,7 @@ global:
   #
   # Common Variables
   #
-  keycloak_url: "http://localhost/mcp"
+  keycloak_url: "http://localhost"
   keycloak_realm: "MCP"
 
   # The MMS Router Chart

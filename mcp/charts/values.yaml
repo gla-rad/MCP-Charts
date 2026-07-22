@@ -170,41 +170,46 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
     nginx.ingress.kubernetes.io/rewrite-target: /$1$2
     nginx.ingress.kubernetes.io/use-regex: "true"
+    # Switch to letsencrypt-prod once a staging certificate has issued
+    # cleanly, then delete the mcp-tls secret to force a fresh request.
+    # Staging certificates are untrusted, so the Java services will reject
+    # the chain until this is on prod.
+    cert-manager.io/cluster-issuer: letsencrypt-staging
   hosts:
-    - host: localhost
+    - host: mcp.gla-rad.org
       paths:
-        - path: /mcp/(auth)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-keycloak
-          servicePort: 8090
-        - path: /(mcp/mir)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-identity-registry
-          servicePort: 8443
-        - path: /(mcp/msr)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-service-registry
-          servicePort: 8444
-        - path: /(mcp/mms)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-mms-router
-          servicePort: 8080
-        - path: /(mcp/mms-p2p)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-mms-router
-          servicePort: 9000
-        - path: /(mcp/mms-edge)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-mms-edgerouter
-          servicePort: 8080
-        - path: /(mcp/mms-edge-p2p)(.*)
-          pathType: ImplementationSpecific
-          serviceName: mc-mms-edgerouter
-          servicePort: 9000
-        - path: /mcp/portal()(.*)
+        - path: /portal()(.*)
           pathType: ImplementationSpecific
           serviceName: mcp-management-portal
           servicePort: 4200
+        - path: /(auth)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-keycloak
+          servicePort: 8090
+        - path: /(mir)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-identity-registry
+          servicePort: 8443
+        - path: /(msr)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-service-registry
+          servicePort: 8444
+        - path: /(mms)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-mms-edge-router
+          servicePort: 8080
+        - path: /(mms-p2p)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-mms-router
+          servicePort: 9000
+        - path: /(mms-edge)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-mms-edgerouter
+          servicePort: 8080
+        - path: /(mms-edge-p2p)(.*)
+          pathType: ImplementationSpecific
+          serviceName: mc-mms-edgerouter
+          servicePort: 9000
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

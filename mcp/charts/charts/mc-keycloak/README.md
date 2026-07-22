@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP keycloak service
 
-![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 Although the MIR has its own database, for its user authentication it actually
@@ -65,18 +65,18 @@ The chart will spawn a keycloak service which will  involve three realms:
 | env[9].valueFrom.secretKeyRef.name | string | `"mc-keycloak-secrets"` |  |
 | fullnameOverride | string | `""` |  |
 | global.keycloak_realm | string | `"MCP"` |  |
-| global.keycloak_url | string | `"http://localhost/mcp"` |  |
+| global.keycloak_url | string | `"http://localhost"` |  |
 | global.mc_keycloak.admin_password | string | `"changeit"` |  |
-| global.mc_keycloak.admin_url | string | `"http://localhost/mcp/auth"` |  |
+| global.mc_keycloak.admin_url | string | `"http://localhost/auth"` |  |
 | global.mc_keycloak.admin_username | string | `"admin"` |  |
-| global.mc_keycloak.auth_url | string | `"http://localhost/mcp/auth"` |  |
+| global.mc_keycloak.auth_url | string | `"http://localhost/auth"` |  |
 | global.mc_keycloak.db_password | string | `"changeit"` |  |
 | global.mc_keycloak.db_type | string | `"postgres"` |  |
 | global.mc_keycloak.db_url | string | `"jdbc:postgresql://localhost/keycloak_mcp"` |  |
 | global.mc_keycloak.db_username | string | `"admin"` |  |
 | global.mc_keycloak.keystore | string | `""` |  |
 | global.mc_keycloak.keystore_password | string | `"changeit"` |  |
-| global.mc_keycloak.mir_url | string | `"http://localhost/mcp/mir"` |  |
+| global.mc_keycloak.mir_url | string | `"http://localhost/mir"` |  |
 | global.mc_keycloak.truststore | string | `""` |  |
 | global.mc_keycloak.truststore_password | string | `"changeit\""` |  |
 | image.pullPolicy | string | `"Always"` |  |
