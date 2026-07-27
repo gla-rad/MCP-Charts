@@ -193,11 +193,13 @@ Each service owns its own database and cannot touch the others. All three
 applications run their own schema migrations on first start — Keycloak
 natively, and both registries through Flyway — so no schema needs loading.
 
-Note that you also need to create the `postgis` extension inside the MSR
-database as such:
+Note that you also need the `postgis` extension inside the MSR database. The
+SQL flyway script of the service registry does that for you but the `msr_admin`
+user need to be an rds_superuser to have the correct rights:
 
 ```sql
 \c mcp_service_registry
+GRANT rds_superuser TO msr_admin;
 CREATE EXTENSION IF NOT EXISTS postgis;
 ```
 
@@ -491,6 +493,15 @@ settings were changed because EKS does not work without them:
    with a subnet discovery error when they are missing.
 3. **`MapPublicIpOnLaunch`** was `false` on the public subnets and is `true` in
    the template.
+
+## Monitor
+
+To monitor the pod operation you will need access to the pod logs. These can be
+retrieved locally using the `kubectl` command in the following way:
+
+```bash
+kubectl logs <pod-name> -n <>namespace> -c <container-name>
+```
 
 ## Known issues
 

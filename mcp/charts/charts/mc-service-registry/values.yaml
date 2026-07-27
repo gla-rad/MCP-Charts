@@ -15,15 +15,18 @@ global:
     #
     # Input Files
     #
-
+    own_edge_router_keystore: ""
+    secom_signing_identity_keystore: ""
+    secom_truststore: ""
     #
     # Credentials
     #
     db_username: "admin"
     db_password: "changeit"
     keycloak_client_secret: "changeit"
-    ledger_address: "0x000000000000000000000000000000000000000"
-    ledger_credentials: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    own_edge_router_keystore_password: "changeit"
+    secom_signing_identity_keystore_password: "changeit"
+    secom_truststore_password: "changeit"
     #
     # Other Configuration
     #
@@ -32,13 +35,13 @@ global:
     db_port: 5432
     db_name: "mcp_service_registry"
     keycloak_client_id: "mcpsvreg"
-    ledger_host: "mc-msr-ledger.mcp"
-    ledger_port: 8546
+    mir_root_ca_alias: "mcp-root"
 
 replicaCount: 1
 
 image:
-  repository: ghcr.io/maritimeconnectivity/serviceregistry
+  repository: glarad/mc-service-registry
+  #repository: ghcr.io/maritimeconnectivity/serviceregistry
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -164,26 +167,32 @@ env:
     configMapKeyRef:
       name: mc-service-registry-config
       key: mcp_identity_registry_api_url
-- name: MCP_LEDGER_HOST
-  valueFrom:
-    configMapKeyRef:
-      name: mc-service-registry-config
-      key: msr_ledger_host
-- name: MCP_LEDGER_PORT
-  valueFrom:
-    configMapKeyRef:
-      name: mc-service-registry-config
-      key: msr_ledger_port
-- name: MCP_LEDGER_ADDRESS
+- name: MIR_TRUSTSTORE_PATH
+  value: /conf/secom_truststore.jks
+- name: MIR_TRUSTSTORE_PASSWORD
   valueFrom:
     secretKeyRef:
       name: mc-service-registry-secrets
-      key: msr_ledger_address
-- name: MCP_LEDGER_CREDENTIALS
+      key: secom_truststore_password
+- name: MIR_ROOT_CA_ALIAS
+  valueFrom:
+    configMapKeyRef:
+      name: mc-service-registry-config
+      key: mir-root-ca-alias
+- name: OWN_EDGE_ROUTER_KEYSTORE_PATH
+  value: /conf/own_edge_router_keystore.jks
+- name: OWN_EDGE_ROUTER_KEYSTORE_PASSWORD
   valueFrom:
     secretKeyRef:
       name: mc-service-registry-secrets
-      key: msr_ledger_credentials
+      key: own_edge_router_keystore_password
+- name: SECOM_SIGNING_IDENTITY_PATH
+  value: /conf/signing_identity_keystore.jks
+- name: SECOM_SIGNING_IDENTITY_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: mc-service-registry-secrets
+      key: secom_signing_identity_keystore_password
 - name: CONTEXT_PATH
   value: /msr
 
@@ -191,10 +200,18 @@ livenessProbe:
   httpGet:
     path: /msr/actuator/health/liveness
     port: http
+  initialDelaySeconds: 30   # Wait 30s before first check
+  periodSeconds: 10
+  failureThreshold: 12       # Allow up to 30 + (12 * 10) = 150s total startup time
+  timeoutSeconds: 5
 readinessProbe:
   httpGet:
     path: /msr/actuator/health/readiness
     port: http
+  initialDelaySeconds: 30   # Wait 30s before first check
+  periodSeconds: 10
+  failureThreshold: 12       # Allow up to 30 + (12 * 10) = 150s total startup time
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false
@@ -204,17 +221,31 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: config-volume
+  projected:
+    sources:
+    - secret:
+        name: mc-service-registry-secrets
+        items:
+        - key: secom_truststore
+          path: secom_truststore.jks
+    - secret:
+        name: mc-service-registry-secrets
+        items:
+        - key: own_edge_router_keystore
+          path: own_edge_router_keystore.jks
+    - secret:
+        name: mc-service-registry-secrets
+        items:
+        - key: secom_signing_identity_keystore
+          path: signing_identity_keystore.jks
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- name: config-volume
+  mountPath: "/conf"
+  readOnly: true
 
 nodeSelector: {
   "kubernetes.io/os": linux

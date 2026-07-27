@@ -13,3 +13,4 @@ data:
   mcp_identity_registry_api_url: {{ .Values.global.mc_service_registry.mir_api_url | quote }}
   msr_ledger_host: {{ .Values.global.mc_service_registry.ledger_host | quote }}
   msr_ledger_port: {{ .Values.global.mc_service_registry.ledger_port | quote }}
+  mir-root-ca-alias: {{ .Values.global.mc_service_registry.mir_root_ca_alias | quote }}

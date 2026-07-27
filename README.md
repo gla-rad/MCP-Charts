@@ -70,6 +70,8 @@ helm install grad mcp-charts/mcp -n mcp -f config/values.yaml \
     --set-file global.mc_identity_registry.keycloak_json=config/keycloak.json \
     --set-file global.mc_identity_registry.keystore=config/subca-keystore.jks.b64 \
     --set-file global.mc_identity_registry.truststore=config/mcp-truststore.jks.b64 \
+    --set-file global.mc_service_registry.own_edge_router_keystore=config/msr-keystore.jks.b64 \
+    --set-file global.mc_service_registry.secom_signing_identity_keystore=config/msr-keystore.jks.b64 \
     --set-file global.mc_mms_router.private_key=config/router-cert-key.pem \
     --set-file global.mc_mms_router.certificate=config/router-cert.pem \
     --set-file global.mc_mms_router.certificate_key=config/router-cert-key.pem  \
