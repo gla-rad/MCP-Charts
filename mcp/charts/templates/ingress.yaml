@@ -1,33 +1,66 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "mcp.fullname" . -}}
-{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+{{- $pathType := semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- $className := semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- $networkingV1 := semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- $annotations := deepCopy (default dict .Values.ingress.annotations) -}}
+{{- if and .Values.ingress.className (not $className) }}
+  {{- if not (hasKey $annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set $annotations "kubernetes.io/ingress.class" .Values.ingress.className }}
   {{- end }}
 {{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- /*
+Everything below renders one Ingress per entry in $ingresses. The second entry
+exists because ssl-redirect and force-ssl-redirect are per-Ingress annotations
+in ingress-nginx: a path can only opt out of the https redirect by sitting on
+its own Ingress object, so ingress.plainHttpPaths cannot simply be folded into
+the host paths above. It inherits the same annotations so rewrite-target and
+use-regex cannot drift, with the redirects turned off and the cert-manager
+issuer dropped - the certificate is owned by the main ingress and a second
+issuer annotation would order a duplicate. It also carries no tls block: the
+locations merge into the same nginx server, which already terminates TLS from
+the main ingress, so those paths keep working over https as well as http.
+*/ -}}
+{{- $ingresses := list (dict "name" $fullName "annotations" $annotations "hosts" .Values.ingress.hosts "tls" .Values.ingress.tls) -}}
+{{- if .Values.ingress.plainHttpPaths -}}
+  {{- $plainAnnotations := deepCopy $annotations -}}
+  {{- $_ := unset $plainAnnotations "cert-manager.io/cluster-issuer" -}}
+  {{- $_ := unset $plainAnnotations "cert-manager.io/issuer" -}}
+  {{- $_ := set $plainAnnotations "nginx.ingress.kubernetes.io/ssl-redirect" "false" -}}
+  {{- $_ := set $plainAnnotations "nginx.ingress.kubernetes.io/force-ssl-redirect" "false" -}}
+  {{- $plainHosts := list -}}
+  {{- range .Values.ingress.hosts -}}
+    {{- $plainHosts = append $plainHosts (dict "host" .host "paths" $.Values.ingress.plainHttpPaths) -}}
+  {{- end -}}
+  {{- $ingresses = append $ingresses (dict "name" (printf "%s-plain-http" $fullName) "annotations" $plainAnnotations "hosts" $plainHosts "tls" list) -}}
+{{- end -}}
+{{- range $index, $ingress := $ingresses }}
+{{- if $index }}
+---
+{{- end }}
+{{- if $networkingV1 }}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- else if semverCompare ">=1.14-0" $.Capabilities.KubeVersion.GitVersion }}
 apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
+{{- else }}
 apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $ingress.name }}
   labels:
-    {{- include "mcp.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+    {{- include "mcp.labels" $ | nindent 4 }}
+  {{- with $ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.ingress.className }}
+  {{- if and $.Values.ingress.className $className }}
+  ingressClassName: {{ $.Values.ingress.className }}
   {{- end }}
-  {{- if .Values.ingress.tls }}
+  {{- if $ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
+    {{- range $ingress.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -36,17 +69,17 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
+    {{- range $ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            {{- if and .pathType $pathType }}
             pathType: {{ .pathType }}
             {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              {{- if $networkingV1 }}
               service:
                 name: {{ $.Release.Name }}-{{ .serviceName }}
                 port:
@@ -57,4 +90,5 @@ spec:
               {{- end }}
           {{- end }}
     {{- end }}
+{{- end }}
 {{- end }}

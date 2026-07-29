@@ -170,46 +170,70 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
     nginx.ingress.kubernetes.io/rewrite-target: /$1$2
     nginx.ingress.kubernetes.io/use-regex: "true"
+    # Answer every plain HTTP request on port 80 with a 308 to the https URL.
+    # ingress-nginx already does this once mcp-tls has issued, but force- makes
+    # it unconditional so there is no window where http is served for real.
+    # cert-manager's ACME solver ingress is separate and sets ssl-redirect
+    # false on itself, so HTTP-01 challenges are unaffected.
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     # Switch to letsencrypt-prod once a staging certificate has issued
     # cleanly, then delete the mcp-tls secret to force a fresh request.
     # Staging certificates are untrusted, so the Java services will reject
     # the chain until this is on prod.
     cert-manager.io/cluster-issuer: letsencrypt-staging
   hosts:
-    - host: mcp.gla-rad.org
+    - host: chart-example.local
       paths:
-        - path: /portal()(.*)
+        # Serves the Angular portal from the root. The app is built with
+        # <base href="/">, so it requests /assets/... and /main.js unprefixed;
+        # those only resolve if the portal owns the root path.
+        - path: /()(.*)
           pathType: ImplementationSpecific
           serviceName: mcp-management-portal
           servicePort: 4200
-        - path: /(auth)(.*)
+        - path: /(auth)(/.*)?$
           pathType: ImplementationSpecific
           serviceName: mc-keycloak
           servicePort: 8090
-        - path: /(mir)(.*)
+        - path: /(mir)(/.*)?$
           pathType: ImplementationSpecific
           serviceName: mc-identity-registry
           servicePort: 8443
-        - path: /(msr)(.*)
+        - path: /(msr)(/.*)?$
           pathType: ImplementationSpecific
           serviceName: mc-service-registry
           servicePort: 8444
-        - path: /(mms)(.*)
+        - path: /(mms)(/.*)?$
           pathType: ImplementationSpecific
-          serviceName: mc-mms-edge-router
+          serviceName: mc-mms-router
           servicePort: 8080
-        - path: /(mms-p2p)(.*)
+        - path: /(mms-p2p)(/.*)?$
           pathType: ImplementationSpecific
           serviceName: mc-mms-router
           servicePort: 9000
-        - path: /(mms-edge)(.*)
+        - path: /(mms-edge)(/.*)?$
           pathType: ImplementationSpecific
-          serviceName: mc-mms-edgerouter
+          serviceName: mc-mms-edge-router
           servicePort: 8080
-        - path: /(mms-edge-p2p)(.*)
+        - path: /(mms-edge-p2p)(/.*)?$
           pathType: ImplementationSpecific
-          serviceName: mc-mms-edgerouter
+          serviceName: mc-mms-edge-router
           servicePort: 9000
+  # Paths exempt from the https redirect, rendered as a separate Ingress by
+  # ingress-plain-http.yaml. MIR publishes its CRL and OCSP endpoints inside
+  # issued certificates as http:// URLs, and PKI clients do not follow
+  # redirects: Java's revocation checker POSTs the OCSP request and treats a
+  # 308 as a network error. The responses are CA-signed, so serving them over
+  # plain http is both safe and what RFC 5280 expects.
+  plainHttpPaths:
+    - path: /(mir)(/x509/api/certificates/ocsp/.*)$
+      pathType: ImplementationSpecific
+      serviceName: mc-identity-registry
+      servicePort: 8443
+    - path: /(mir)(/x509/api/certificates/crl/.*)$
+      pathType: ImplementationSpecific
+      serviceName: mc-identity-registry
+      servicePort: 8443
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

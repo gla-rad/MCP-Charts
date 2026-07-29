@@ -171,7 +171,7 @@ env:
       name: mcp-management-portal-config
       key: mcp_portal_management_portal_email
 - name: APP_BASE_HREF
-  value: "/portal/"
+  value: "/"
 
 # livenessProbe:
 #   httpGet:

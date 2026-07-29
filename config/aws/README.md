@@ -434,7 +434,7 @@ ingress:
   tls:
     - secretName: mcp-tls
       hosts:
-        - mcp.gla-rad.org
+        - <domain.example.net>
 ```
 
 The certificate is requested when the chart is installed in step 8. Follow it
@@ -458,6 +458,46 @@ importantly the Java services reject the chain with `PKIX path building
 failed` when they call Keycloak over HTTPS. Staging proves the plumbing —
 DNS, challenge routing, issuance — but the platform will not work end to end
 until the annotation is on `letsencrypt-prod`.
+
+### Redirecting HTTP to HTTPS
+
+The NLB from step 5 listens on both 80 and 443, because the ingress-nginx
+`Service` publishes both, and it forwards each straight through as TCP. Port 80
+therefore reaches nginx as plain HTTP, and nginx is the only thing in the path
+that can do anything about it — an NLB is layer 4 and cannot issue a redirect.
+
+The default chart `values.yaml` carries:
+
+```yaml
+nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+```
+
+which makes nginx answer every port 80 request with a `308` to the same URL
+under `https`. ingress-nginx would do this anyway once `mcp-tls` exists, since
+`ssl-redirect` defaults to true for hosts with a certificate; `force-` removes
+the dependency on the secret being present, so there is no window during
+issuance where plain HTTP is actually served. 
+
+ACME HTTP-01 still works: the solver is a separate `Ingress` created by
+cert-manager with `ssl-redirect: "false"` on itself. The solver is not,
+however, insulated from the paths above just by being a separate `Ingress`
+- ingress-nginx merges every `Ingress` for a host into one server block.
+Since the portal now holds the root as a regex location, and nginx lets a
+matching regex beat a non-`^~` prefix location, the solver needs `use-regex`
+of its own to win `/.well-known/acme-challenge/...` back. That is set through
+`ingressTemplate` in [cert-manager-issuers.yaml](cert-manager-issuers.yaml);
+removing it makes issuance and renewal 404 into the portal.
+
+Verify with:
+
+```bash
+curl -sI <domain.example.net> | head -3
+```
+
+Do **not** set `use-forwarded-headers: true` on the controller to try to
+improve this. The NLB is layer 4 and sends no `X-Forwarded-Proto`, so nginx
+would fall back to trusting a header that is never set and redirect HTTPS
+requests to HTTPS forever.
 
 ## 8. Install the MCP charts
 

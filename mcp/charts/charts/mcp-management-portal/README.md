@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP Management Portal
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.8](https://img.shields.io/badge/AppVersion-0.6.8-informational?style=flat-square)
 
 ## Description
 Management Portal is an interface to manage resources registered in
@@ -38,7 +38,7 @@ You can experience a live demo from
 | env[11].valueFrom.configMapKeyRef.key | string | `"mcp_portal_management_portal_email"` |  |
 | env[11].valueFrom.configMapKeyRef.name | string | `"mcp-management-portal-config"` |  |
 | env[12].name | string | `"APP_BASE_HREF"` |  |
-| env[12].value | string | `"/portal/"` |  |
+| env[12].value | string | `"/"` |  |
 | env[1].name | string | `"MANAGEMENT_PORTAL_NAME"` |  |
 | env[1].valueFrom.configMapKeyRef.key | string | `"mcp_portal_name"` |  |
 | env[1].valueFrom.configMapKeyRef.name | string | `"mcp-management-portal-config"` |  |

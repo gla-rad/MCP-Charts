@@ -25,13 +25,25 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-staging-account-key
     solvers:
-      # HTTP-01 needs mcp.gla-rad.org to resolve to the ingress load balancer
+      # HTTP-01 needs a domain to resolve to the ingress load balancer
       # before a certificate can be issued. cert-manager creates its own
-      # short-lived Ingress for the challenge, so the regex rewrite rules on
-      # the MCP ingress do not interfere.
+      # short-lived Ingress for the challenge, but ingress-nginx merges every
+      # Ingress for a host into one server block, so that Ingress is not
+      # isolated from the MCP one.
+      #
+      # The MCP ingress now serves the portal from /()(.*), a regex location.
+      # nginx tries prefix locations first but lets a matching regex override a
+      # non-^~ prefix, so a plain solver location would lose the challenge to
+      # the portal. use-regex puts the solver on equal footing, and its path is
+      # far longer than /()(.*), so ingress-nginx's longest-first ordering puts
+      # it ahead. Without this, issuance and renewal 404 into the portal.
       - http01:
           ingress:
             ingressClassName: nginx
+            ingressTemplate:
+              metadata:
+                annotations:
+                  nginx.ingress.kubernetes.io/use-regex: "true"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -44,6 +56,11 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:
+      # See the note on the staging solver for why use-regex is required here.
       - http01:
           ingress:
             ingressClassName: nginx
+            ingressTemplate:
+              metadata:
+                annotations:
+                  nginx.ingress.kubernetes.io/use-regex: "true"
