@@ -3,6 +3,17 @@ entries:
   mcp:
   - apiVersion: v2
     appVersion: latest
+    created: "2026-07-29T23:03:07.937564625Z"
+    description: A Helm chart for deploying the Maritime Connectivity Platform (MCP)
+      in Kubernetes
+    digest: 04839e5fded98e7ef12c1bf0dacea6a136deb50c1bb20beb738b29051822df65
+    name: mcp
+    type: application
+    urls:
+    - https://github.com/gla-rad/MCP-Charts/releases/download/mcp-0.0.19/mcp-0.0.19.tgz
+    version: 0.0.19
+  - apiVersion: v2
+    appVersion: latest
     created: "2026-07-27T08:52:03.718615693Z"
     description: A Helm chart for deploying the Maritime Connectivity Platform (MCP)
       in Kubernetes
@@ -166,4 +177,4 @@ entries:
     urls:
     - https://github.com/gla-rad/MCP-Charts/releases/download/mcp-0.0.4/mcp-0.0.4.tgz
     version: 0.0.4
-generated: "2026-07-27T08:52:03.718735417Z"
+generated: "2026-07-29T23:03:07.937722521Z"
