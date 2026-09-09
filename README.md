@@ -64,22 +64,23 @@ be PEM encoded ECDSA keys, in PKCS1 format.
 
 ```bash
 helm install grad mcp-charts/mcp -n mcp -f config/values.yaml \
+    --set-file ingress.clientCertificate.caChain=config/config-aws/client-ca-chain.pem \
     --set-file global.mc_identity_registry.configuration=config/application.yaml \
-    --set-file global.mc_keycloak.keystore=config/grad/idbroker-updater.jks.b64 \
-    --set-file global.mc_keycloak.truststore=config/grad/root-ca-keystore.jks.b64 \
-    --set-file global.mc_identity_registry.keycloak_json=config/grad/keycloak.json \
-    --set-file global.mc_identity_registry.keystore=config/grad/subca-keystore.jks.b64 \
-    --set-file global.mc_identity_registry.truststore=config/grad/mcp-truststore.jks.b64 \
-    --set-file global.mc_service_registry.own_edge_router_keystore=config/grad/msr-keystore.jks.b64 \
-    --set-file global.mc_service_registry.secom_signing_identity_keystore=config/grad/msr-keystore.jks.b64 \
-    --set-file global.mc_service_registry.secom_truststore=config/grad/msr-truststore.jks.b64 \
+    --set-file global.mc_keycloak.keystore=config/config-aws/idbroker-updater.jks.b64 \
+    --set-file global.mc_keycloak.truststore=config/config-aws/root-ca-keystore.jks.b64 \
+    --set-file global.mc_identity_registry.keycloak_json=config/config-aws/keycloak.json \
+    --set-file global.mc_identity_registry.keystore=config/config-aws/subca-keystore.jks.b64 \
+    --set-file global.mc_identity_registry.truststore=config/config-aws/mcp-truststore.jks.b64 \
+    --set-file global.mc_service_registry.own_edge_router_keystore=config/config-aws/msr-keystore.jks.b64 \
+    --set-file global.mc_service_registry.secom_signing_identity_keystore=config/config-aws/msr-keystore.jks.b64 \
+    --set-file global.mc_service_registry.secom_truststore=config/config-aws/msr-truststore.jks.b64 \
     --set-file global.mc_mms_router.private_key=config/router-cert-key.pem \
     --set-file global.mc_mms_router.certificate=config/router-cert.pem \
-    --set-file global.mc_mms_router.certificate_key=config/router-cert-key.pem  \
+    --set-file global.mc_mms_router.certificate_key=config/router-cert-key.pem \
     --set-file global.mc_mms_router.client_ca=config/ca-chain.pem \
     --set-file global.mc_mms_router.beacons=config/beacons.txt \
     --set-file global.mc_mms_edge_router.certificate=config/edge-router-cert.pem \
-    --set-file global.mc_mms_edge_router.certificate_key=config/edge-router-cert-key.pem  \
+    --set-file global.mc_mms_edge_router.certificate_key=config/edge-router-cert-key.pem \
     --set-file global.mc_mms_edge_router.client_certificate=config/edge-router-cert.pem \
     --set-file global.mc_mms_edge_router.client_certificate_key=config/edge-router-cert-key.pem \
     --set-file global.mc_mms_edge_router.client_ca=config/ca-chain.pem
