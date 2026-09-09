@@ -181,6 +181,63 @@ ingress:
     # Staging certificates are untrusted, so the Java services will reject
     # the chain until this is on prod.
     cert-manager.io/cluster-issuer: letsencrypt-staging
+  # Client certificate (mTLS) authentication - the ingress-nginx equivalent of
+  # the ssl_client_certificate / ssl_verify_client / X-Client-Certificate block
+  # in the IdentityRegistry sample nginx.conf. That sample splits mTLS and OIDC
+  # onto separate hostnames (api-x509. and api.); we serve both from the single
+  # host below, which works because MIR already separates them by path - it
+  # authenticates /x509/** and /service/** off the certificate and /oidc/** off
+  # a bearer token - and both hostnames in the sample proxy to the same
+  # upstream on 8443 anyway.
+  #
+  # The cost of one hostname is that ssl_verify_client is a server-level nginx
+  # directive that cannot be scoped to a location, so it has to be "optional":
+  # nginx offers a certificate request to every client on this host and lets
+  # through the ones that do not answer it. A certificate the CA chain does not
+  # verify is still rejected, in the handshake, as 495/496. The visible cost is
+  # that a browser loading the portal shows a certificate picker to anyone who
+  # has an MCP certificate installed - unavoidable while mTLS and plain TLS
+  # share a name.
+  #
+  # templates/ingress.yaml applies the resulting annotations to every Ingress it
+  # renders, the -plain-http one included. ingress-nginx keys these off the
+  # server rather than the location, so they have to agree across every Ingress
+  # sharing the host; because pass-certificate-to-upstream then renders
+  # proxy_set_header on every location, that agreement is also what stops a
+  # client from spoofing ssl-client-cert on a path that would otherwise forward
+  # the header it was sent.
+  clientCertificate:
+    enabled: false
+    # PEM bundle of the CA chain to verify client certificates against -
+    # ssl_client_certificate in the sample - i.e. the MCP root plus the sub CAs
+    # that issue client certificates. Supply it with:
+    #   --set-file ingress.clientCertificate.caChain=config/mc-ca-chain.pem
+    caChain: ""
+    # Optional PEM CRL bundle, rendered as ssl_crl. nginx checks every
+    # certificate in the presented chain against it, so this has to concatenate
+    # the CRLs of the root and of every sub CA in the chain - a CRL covering
+    # only part of the chain fails the handshake outright. MIR does its own
+    # revocation checking, so leaving this empty is a reasonable choice; it
+    # moves the rejection from the handshake to the application.
+    #   --set-file ingress.clientCertificate.crl=config/combined-crl.pem
+    crl: ""
+    # Reuse a Secret that already carries ca.crt (and optionally ca.crl)
+    # instead of having the chart build one out of the two values above.
+    existingSecret: ""
+    # "optional" verifies a certificate when one is presented and admits
+    # requests without one. "on" would demand a certificate from every request
+    # on this host, which locks out the portal and the OIDC APIs.
+    verifyClient: optional
+    # 3 in the sample config for MIR: client -> sub CA -> root.
+    verifyDepth: 3
+    # URL to send a failed client certificate to (nginx 495/496). The sample
+    # maps these to a bare 401; empty keeps nginx's default 400.
+    errorPage: ""
+    # The header ingress-nginx writes is "ssl-client-cert", while MIR defaults
+    # to "X-Client-Certificate". Line them up in the application.yaml passed to
+    # global.mc_identity_registry.configuration, which is what the commented
+    # entry in MIR's own application.yaml is for:
+    #   net.maritimeconnectivity.idreg.certs.client-cert-header: ssl-client-cert
   hosts:
     - host: chart-example.local
       paths:

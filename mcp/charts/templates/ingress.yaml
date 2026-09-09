@@ -10,6 +10,29 @@
   {{- end }}
 {{- end }}
 {{- /*
+Client certificate authentication. ssl_verify_client, ssl_client_certificate
+and ssl_crl are server-level nginx directives, and ingress-nginx accordingly
+hangs all of this off the server rather than the location, so these annotations
+are set on $annotations before the per-Ingress copies are taken below: every
+Ingress sharing the host has to agree on them, and the -plain-http one shares
+the host. pass-certificate-to-upstream then renders proxy_set_header for
+ssl-client-cert and friends on every location of the server, which both hands
+the certificate to MIR and overwrites any of those headers a client tried to
+send for itself.
+*/ -}}
+{{- with .Values.ingress.clientCertificate }}
+{{- if .enabled }}
+{{- $secretName := .existingSecret | default (printf "%s-client-ca" $fullName) }}
+{{- $_ := set $annotations "nginx.ingress.kubernetes.io/auth-tls-secret" (printf "%s/%s" $.Release.Namespace $secretName) }}
+{{- $_ := set $annotations "nginx.ingress.kubernetes.io/auth-tls-verify-client" (.verifyClient | default "optional") }}
+{{- $_ := set $annotations "nginx.ingress.kubernetes.io/auth-tls-verify-depth" (.verifyDepth | default 3 | toString) }}
+{{- $_ := set $annotations "nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream" "true" }}
+{{- if .errorPage }}
+{{- $_ := set $annotations "nginx.ingress.kubernetes.io/auth-tls-error-page" .errorPage }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- /*
 Everything below renders one Ingress per entry in $ingresses. The second entry
 exists because ssl-redirect and force-ssl-redirect are per-Ingress annotations
 in ingress-nginx: a path can only opt out of the https redirect by sitting on

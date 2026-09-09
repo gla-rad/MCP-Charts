@@ -2,7 +2,7 @@
 
 A Helm chart for deploying the Maritime Connectivity Platform (MCP) in Kubernetes
 
-![Version: 0.0.19](https://img.shields.io/badge/Version-0.0.19-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.20](https://img.shields.io/badge/Version-0.0.20-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The the Maritime Connectivity Platform (MCP) is a decentralised platform that
@@ -86,6 +86,13 @@ Maritime Connectivity Platform”.
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$1$2"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
 | ingress.className | string | `"nginx"` |  |
+| ingress.clientCertificate.caChain | string | `""` |  |
+| ingress.clientCertificate.crl | string | `""` |  |
+| ingress.clientCertificate.enabled | bool | `false` |  |
+| ingress.clientCertificate.errorPage | string | `""` |  |
+| ingress.clientCertificate.existingSecret | string | `""` |  |
+| ingress.clientCertificate.verifyClient | string | `"optional"` |  |
+| ingress.clientCertificate.verifyDepth | int | `3` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].host | string | `"chart-example.local"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/()(.*)"` |  |
