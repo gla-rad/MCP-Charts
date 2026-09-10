@@ -75,6 +75,10 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 8090
+  # Keycloak serves the health (and metrics) endpoints on a separate management
+  # interface, not on the main HTTP port. Only the probes talk to it, so it is
+  # deliberately declared as a container port and left out of the Service.
+  port_management: 9000
   externalIPs:
     - 10.0.1.42 
 
@@ -116,6 +120,8 @@ env:
   - name: KC_PROXY_HEADERS
     value: "xforwarded"
   - name: KC_HTTP_ENABLED
+    value: "true"
+  - name: KC_HEALTH_ENABLED
     value: "true"
   - name: KC_HOSTNAME
     valueFrom:
@@ -177,14 +183,26 @@ env:
         name: mc-keycloak-secrets
         key: keycloak_truststore_password
 
-# livenessProbe:
-#  httpGet:
-#    path: /health/live
-#    port: http
-# readinessProbe:
-#  httpGet:
-#    path: /health/ready
-#    port: http
+# The health endpoints are served on the management port, under the management
+# relative path. That path is inherited from http-relative-path, which the MCP
+# image bakes in as /auth at build time, so the probes have to ask for
+# /auth/health/* - plain /health/* answers 404 and the probes then kill the pod.
+livenessProbe:
+  httpGet:
+    path: /auth/health/live
+    port: management
+  initialDelaySeconds: 30   # Wait 30s before first check
+  periodSeconds: 10
+  failureThreshold: 12      # Allow up to 30 + (12 * 10) = 150s total startup time
+  timeoutSeconds: 5
+readinessProbe:
+  httpGet:
+    path: /auth/health/ready
+    port: management
+  initialDelaySeconds: 30   # Wait 30s before first check
+  periodSeconds: 10
+  failureThreshold: 12      # Allow up to 30 + (12 * 10) = 150s total startup time
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false

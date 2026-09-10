@@ -202,7 +202,7 @@ livenessProbe:
     port: http
   initialDelaySeconds: 30   # Wait 30s before first check
   periodSeconds: 10
-  failureThreshold: 12       # Allow up to 30 + (12 * 10) = 150s total startup time
+  failureThreshold: 12      # Allow up to 30 + (12 * 10) = 150s total startup time
   timeoutSeconds: 5
 readinessProbe:
   httpGet:
@@ -210,7 +210,7 @@ readinessProbe:
     port: http
   initialDelaySeconds: 30   # Wait 30s before first check
   periodSeconds: 10
-  failureThreshold: 12       # Allow up to 30 + (12 * 10) = 150s total startup time
+  failureThreshold: 12      # Allow up to 30 + (12 * 10) = 150s total startup time
   timeoutSeconds: 5
 
 autoscaling:
