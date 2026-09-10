@@ -132,6 +132,16 @@ env:
 # The MMS routers expose a single /health endpoint, which reports that the
 # process is up and serving - it runs no dependency checks of its own, so the
 # same endpoint backs both probes.
+#
+# The endpoint arrived in upstream MMS commit c4c7a50 (2026-08-13) and is not
+# in the gla-rad images yet, so the probes are off by default: with no health
+# server listening the kubelet gets a connection refused and restart-loops the
+# pod. Turn this on once the images are rebuilt from a fork carrying that
+# commit - it gates the probes and the container port together, since a probe
+# that names a port the container does not declare cannot be evaluated.
+healthProbes:
+  enabled: false
+
 livenessProbe:
   httpGet:
     path: /health

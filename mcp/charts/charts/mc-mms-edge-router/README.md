@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MMS Edge Router
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MMS system architecture defines the following components:
@@ -77,6 +77,7 @@ one MMS Router to another.
 | global.mc_mms_edge_router.mrn | string | `""` |  |
 | global.mc_mms_edge_router.port | int | `8080` |  |
 | global.mc_mms_edge_router.router_address | string | `"mc-mms-router.mcp:8080"` |  |
+| healthProbes.enabled | bool | `false` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/gla-rad/mc-mms-edgerouter"` |  |
 | image.tag | string | `""` |  |

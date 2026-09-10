@@ -2,7 +2,7 @@
 
 A Helm chart for the MCP MMS Router
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 ## Description
 The MMS system architecture defines the following components:
@@ -70,6 +70,7 @@ Protocol (MMTP). The MMTP facilitates the transfer of messages from MMS Agent
 | global.mc_mms_router.port | int | `8080` |  |
 | global.mc_mms_router.port_libp2p | int | `9000` |  |
 | global.mc_mms_router.private_key | string | `""` |  |
+| healthProbes.enabled | bool | `false` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/gla-rad/mc-mms-router"` |  |
 | image.tag | string | `""` |  |
