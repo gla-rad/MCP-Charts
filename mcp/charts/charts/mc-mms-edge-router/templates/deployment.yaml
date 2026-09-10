@@ -43,6 +43,9 @@ spec:
             - name: libp2p
               containerPort: {{ .Values.service.port_libp2p }}
               protocol: TCP
+            - name: health
+              containerPort: {{ .Values.service.port_health }}
+              protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

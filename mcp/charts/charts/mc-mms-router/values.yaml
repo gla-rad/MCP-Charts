@@ -72,6 +72,12 @@ service:
   type: ClusterIP
   port: 8080
   port_libp2p: 9000
+  # The router serves its health endpoint from a separate plaintext HTTP server,
+  # not from the main port. Only the probes talk to it, so it is declared as a
+  # container port and kept out of the Service. This has to match the binary's
+  # own default: the entrypoint script of the image maps no environment
+  # variable onto --health-port, so the port cannot be overridden from here.
+  port_health: 8081
 
 ingress:
   enabled: false
@@ -123,14 +129,25 @@ env:
 - name: BEACONS
   value: "/conf/beacons.txt"
 
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /
-#     port: http
+# The MMS routers expose a single /health endpoint, which reports that the
+# process is up and serving - it runs no dependency checks of its own, so the
+# same endpoint backs both probes.
+livenessProbe:
+  httpGet:
+    path: /health
+    port: health
+  initialDelaySeconds: 30   # Wait 30s before first check
+  periodSeconds: 10
+  failureThreshold: 12      # Allow up to 30 + (12 * 10) = 150s total startup time
+  timeoutSeconds: 5
+readinessProbe:
+  httpGet:
+    path: /health
+    port: health
+  initialDelaySeconds: 30   # Wait 30s before first check
+  periodSeconds: 10
+  failureThreshold: 12      # Allow up to 30 + (12 * 10) = 150s total startup time
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false
