@@ -540,7 +540,7 @@ To monitor the pod operation you will need access to the pod logs. These can be
 retrieved locally using the `kubectl` command in the following way:
 
 ```bash
-kubectl logs <pod-name> -n <>namespace> -c <container-name>
+kubectl logs <pod-name> -n <namespace> -c <container-name>
 ```
 
 ## Known issues
