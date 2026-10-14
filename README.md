@@ -63,17 +63,17 @@ however can be provided as they are. Also the private keys provided, need to
 be PEM encoded ECDSA keys, in PKCS1 format.
 
 ```bash
-helm install grad mcp-charts/mcp -n mcp -f config/values.yaml \
-    --set-file ingress.clientCertificate.caChain=config/config-aws/client-ca-chain.pem \
+helm upgrade grad mcp-charts/mcp -n mcp -f config/values.yaml \
+    --set-file ingress.clientCertificate.caChain=config/aws-config/client-ca-chain.pem \
     --set-file global.mc_identity_registry.configuration=config/application.yaml \
-    --set-file global.mc_keycloak.keystore=config/config-aws/idbroker-updater.jks.b64 \
-    --set-file global.mc_keycloak.truststore=config/config-aws/root-ca-keystore.jks.b64 \
-    --set-file global.mc_identity_registry.keycloak_json=config/config-aws/keycloak.json \
-    --set-file global.mc_identity_registry.keystore=config/config-aws/subca-keystore.jks.b64 \
-    --set-file global.mc_identity_registry.truststore=config/config-aws/mcp-truststore.jks.b64 \
-    --set-file global.mc_service_registry.own_edge_router_keystore=config/config-aws/mms-edge-router-keystore.jks.b64 \
-    --set-file global.mc_service_registry.secom_signing_identity_keystore=config/config-aws/msr-keystore.jks.b64 \
-    --set-file global.mc_service_registry.secom_truststore=config/config-aws/msr-truststore.jks.b64 \
+    --set-file global.mc_keycloak.keystore=config/aws-config/idbroker-updater.jks.b64 \
+    --set-file global.mc_keycloak.truststore=config/aws-config/root-ca-keystore.jks.b64 \
+    --set-file global.mc_identity_registry.keycloak_json=config/aws-config/keycloak.json \
+    --set-file global.mc_identity_registry.keystore=config/aws-config/subca-keystore.jks.b64 \
+    --set-file global.mc_identity_registry.truststore=config/aws-config/mcp-truststore.jks.b64 \
+    --set-file global.mc_service_registry.own_edge_router_keystore=config/aws-config/mms-edge-router-keystore.jks.b64 \
+    --set-file global.mc_service_registry.secom_keystore=config/aws-config/msr-keystore.jks.b64 \
+    --set-file global.mc_service_registry.secom_truststore=config/aws-config/msr-truststore.jks.b64 \
     --set-file global.mc_mms_router.private_key=config/router-cert-key.pem \
     --set-file global.mc_mms_router.certificate=config/router-cert.pem \
     --set-file global.mc_mms_router.certificate_key=config/router-cert-key.pem \

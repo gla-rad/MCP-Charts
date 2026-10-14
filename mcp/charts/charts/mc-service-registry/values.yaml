@@ -162,23 +162,30 @@ env:
     secretKeyRef:
       name: mc-service-registry-secrets
       key: msr_keycloak_client_secret
-- name: MCP_MIR_URL
+- name: SECOM_KEYSTORE_PATH
+  value: /conf/secom_keystore.jks
+- name: SECOM_KEYSTORE_PASSWORD
   valueFrom:
-    configMapKeyRef:
-      name: mc-service-registry-config
-      key: mcp_identity_registry_api_url
-- name: MIR_TRUSTSTORE_PATH
+    secretKeyRef:
+      name: mc-service-registry-secrets
+      key: secom_keystore_password
+- name: SECOM_TRUSTSTORE_PATH
   value: /conf/secom_truststore.jks
-- name: MIR_TRUSTSTORE_PASSWORD
+- name: SECOM_TRUSTSTORE_PASSWORD
   valueFrom:
     secretKeyRef:
       name: mc-service-registry-secrets
       key: secom_truststore_password
-- name: MIR_ROOT_CA_ALIAS
+- name: SECOM_ROOT_CERT_ALIAS
   valueFrom:
     configMapKeyRef:
       name: mc-service-registry-config
-      key: mir-root-ca-alias
+      key: secom_root_cert_alias
+- name: MCP_MIR_URL
+  valueFrom:
+    configMapKeyRef:
+      name: mc-service-registry-config
+      key: mir_api_url
 - name: OWN_EDGE_ROUTER_KEYSTORE_PATH
   value: /conf/own_edge_router_keystore.jks
 - name: OWN_EDGE_ROUTER_KEYSTORE_PASSWORD
@@ -186,13 +193,11 @@ env:
     secretKeyRef:
       name: mc-service-registry-secrets
       key: own_edge_router_keystore_password
-- name: SECOM_SIGNING_IDENTITY_PATH
-  value: /conf/signing_identity_keystore.jks
-- name: SECOM_SIGNING_IDENTITY_PASSWORD
+- name: OWN_EDGE_ROUTER_CONNECTION_ENDPOINT
   valueFrom:
-    secretKeyRef:
-      name: mc-service-registry-secrets
-      key: secom_signing_identity_keystore_password
+    configMapKeyRef:
+      name: mc-service-registry-config
+      key: own_edge_router_connection_endpoint
 - name: CONTEXT_PATH
   value: /msr
 
@@ -228,6 +233,11 @@ volumes:
     - secret:
         name: mc-service-registry-secrets
         items:
+        - key: secom_keystore
+          path: secom_keystore.jks
+    - secret:
+        name: mc-service-registry-secrets
+        items:
         - key: secom_truststore
           path: secom_truststore.jks
     - secret:
@@ -235,11 +245,6 @@ volumes:
         items:
         - key: own_edge_router_keystore
           path: own_edge_router_keystore.jks
-    - secret:
-        name: mc-service-registry-secrets
-        items:
-        - key: secom_signing_identity_keystore
-          path: signing_identity_keystore.jks
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:

@@ -10,7 +10,6 @@ data:
   msr_database_port: {{ .Values.global.mc_service_registry.db_port | quote }}
   msr_database_name: {{ .Values.global.mc_service_registry.db_name | quote }}
   msr_keycloak_client_id: {{ .Values.global.mc_service_registry.keycloak_client_id | quote }}
-  mcp_identity_registry_api_url: {{ .Values.global.mc_service_registry.mir_api_url | quote }}
-  msr_ledger_host: {{ .Values.global.mc_service_registry.ledger_host | quote }}
-  msr_ledger_port: {{ .Values.global.mc_service_registry.ledger_port | quote }}
-  mir-root-ca-alias: {{ .Values.global.mc_service_registry.mir_root_ca_alias | quote }}
+  mir_api_url: {{ .Values.global.mc_service_registry.mir_api_url | quote }}
+  secom_root_cert_alias: {{ .Values.global.mc_service_registry.secom_root_cert_alias | quote }}
+  own_edge_router_connection_endpoint: {{ .Values.global.mc_service_registry.own_edge_router_connection_endpoint | quote }}
